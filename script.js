@@ -5,8 +5,8 @@ const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone
 
 const nextIntervalBtn = document.getElementById('hear-new-btn');
 nextIntervalBtn.addEventListener('click', () => {
+  const randomNoteIndex = Math.floor(Math.random() * allNoteNames.length);
   function createNoteIntervalList() {
-    const randomNoteIndex = Math.floor(Math.random() * allNoteNames.length);
     const activeNoteIntervals = []
     for (i = 0; i < allIntervals.length; i++) {
       activeNoteIntervals.push({
@@ -24,5 +24,9 @@ nextIntervalBtn.addEventListener('click', () => {
     return specifiedIntervals;
   }
 
-  console.log(getSpecifiedIntervals());
+  const roundIntervalChoices = getSpecifiedIntervals();
+  const roundInterval = roundIntervalChoices[Math.floor(Math.random() * roundIntervalChoices.length)];
+
+  console.log(allNoteNames[randomNoteIndex]);
+  console.log(roundInterval);
 })
