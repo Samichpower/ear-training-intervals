@@ -19,9 +19,9 @@ function getNewInterval() {
     return activeNoteIntervals;
   }
   function getSpecifiedIntervals() {
-    const allRoundIntervals = createNoteIntervalList();
+    const currentRoundIntervals = createNoteIntervalList();
     const specifiedIntervals = [];
-    specifiedIntervals.push(allRoundIntervals[4], allRoundIntervals[7], allRoundIntervals[12]);
+    specifiedIntervals.push(currentRoundIntervals[4], currentRoundIntervals[7], currentRoundIntervals[12]);
     return specifiedIntervals;
   }
 
