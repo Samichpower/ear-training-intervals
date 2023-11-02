@@ -33,16 +33,15 @@ function getNewInterval() {
   console.log(roundInterval);
 }
 
-const allIntervalSelections = document.querySelectorAll('.interval');
-
-let specifiedIntervals;
+let chosenIntervals;
 
 newGameBtn.addEventListener('click', () => {
-  selectedIntervals = [];
+  const allIntervalSelections = document.querySelectorAll('.interval');
+  chosenIntervals = [];
   allIntervalSelections.forEach((interval) => {
     if (interval.checked) {
-      selectedIntervals.push(interval.id);
+      chosenIntervals.push(interval.id);
     }
   })
-  console.log(selectedIntervals)
+  console.log(chosenIntervals)
 })
