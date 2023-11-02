@@ -3,12 +3,11 @@ const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone
 
 const newGameBtn = document.getElementById('new-game-btn');
 const nextIntervalBtn = document.getElementById('hear-new-btn');
-
 nextIntervalBtn.addEventListener('click', getNewInterval);
 
 function getNewInterval() {
   const randomNoteIndex = Math.floor(Math.random() * allNoteNames.length);
-  function createNoteIntervalList() {
+  function createIntervalObjectList() {
     const activeNoteIntervals = []
     for (i = 0; i < allIntervals.length; i++) {
       activeNoteIntervals.push({
@@ -18,14 +17,15 @@ function getNewInterval() {
     }
     return activeNoteIntervals;
   }
-  function getSpecifiedIntervals() {
-    const currentRoundIntervals = createNoteIntervalList();
+
+  function getGameIntervals() {
+    const currentRoundIntervals = createIntervalObjectList();
     const specifiedIntervals = [];
     specifiedIntervals.push(currentRoundIntervals[4], currentRoundIntervals[7], currentRoundIntervals[12]);
     return specifiedIntervals;
   }
 
-  const roundIntervalChoices = getSpecifiedIntervals();
+  const roundIntervalChoices = getGameIntervals();
   const roundInterval = roundIntervalChoices[Math.floor(Math.random() * roundIntervalChoices.length)];
 
   //This is probably where I'd put the setTimeout or whatever to add sound and stuff
@@ -33,7 +33,16 @@ function getNewInterval() {
   console.log(roundInterval);
 }
 
-function newGame() {
-  getNewInterval();
-  
-}
+const allIntervalSelections = document.querySelectorAll('.interval');
+
+let specifiedIntervals;
+
+newGameBtn.addEventListener('click', () => {
+  specifiedIntervals = [];
+  allIntervalSelections.forEach((interval) => {
+    if (interval.checked) {
+      specifiedIntervals.push(interval.id);
+    }
+  })
+  console.log(specifiedIntervals)
+})
