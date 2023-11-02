@@ -38,11 +38,11 @@ const allIntervalSelections = document.querySelectorAll('.interval');
 let specifiedIntervals;
 
 newGameBtn.addEventListener('click', () => {
-  specifiedIntervals = [];
+  selectedIntervals = [];
   allIntervalSelections.forEach((interval) => {
     if (interval.checked) {
-      specifiedIntervals.push(interval.id);
+      selectedIntervals.push(interval.id);
     }
   })
-  console.log(specifiedIntervals)
+  console.log(selectedIntervals)
 })
