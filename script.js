@@ -19,6 +19,7 @@ newIntervalBtn.addEventListener('click', () => {
   let intervalNoteIndex = getIntervalNoteIndex();
   const intervalNote = getAudioFromIndex(intervalNoteIndex);
   setTimeout(() => {
+    rootNote.volume = 0.5;
     intervalNote.play();
   }, 800);
 });
