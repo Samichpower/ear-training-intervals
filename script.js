@@ -3,16 +3,15 @@ const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone
 
 const newGameBtn = document.getElementById('new-game-btn');
 const nextIntervalBtn = document.getElementById('hear-new-btn');
-nextIntervalBtn.addEventListener('click', getNewInterval);
+// nextIntervalBtn.addEventListener('click', playNextInterval);
 
-function getNewInterval() {
-  const randomNoteIndex = Math.floor(Math.random() * allNoteNames.length);
+function playNextInterval() {
   function createIntervalObjectList() {
     const activeNoteIntervals = []
     for (i = 0; i < allIntervals.length; i++) {
       activeNoteIntervals.push({
         interval: allIntervals[i],
-        note: allNoteNames[randomNoteIndex + i]
+        note: allNoteNames[rootNote + i]
       })
     }
     return activeNoteIntervals;
@@ -25,23 +24,43 @@ function getNewInterval() {
     return specifiedIntervals;
   }
 
+  
+
   const roundIntervalChoices = getGameIntervals();
   const roundInterval = roundIntervalChoices[Math.floor(Math.random() * roundIntervalChoices.length)];
 
   //This is probably where I'd put the setTimeout or whatever to add sound and stuff
-  console.log(allNoteNames[randomNoteIndex]);
+  console.log(allNoteNames[rootNote]);
   console.log(roundInterval);
 }
 
 let chosenIntervals;
 
 newGameBtn.addEventListener('click', () => {
-  const allIntervalSelections = document.querySelectorAll('.interval');
+  const intervalChoices = document.querySelectorAll('.interval');
   chosenIntervals = [];
-  allIntervalSelections.forEach((interval) => {
+  intervalChoices.forEach((interval) => {
     if (interval.checked) {
       chosenIntervals.push(interval.id);
     }
   })
   console.log(chosenIntervals)
 })
+
+
+
+function getIntervalNote() {
+  const rootNote = Math.floor(Math.random() * allNoteNames.length);
+  const randomInterval = Math.floor(Math.random() * chosenIntervals.length);
+  console.log(allNoteNames[rootNote]);
+  console.log(chosenIntervals[randomInterval]);
+  for (let i = 0; i < allIntervals.length; i++) {
+    if (allIntervals[i] === chosenIntervals[randomInterval]) {
+      return allNoteNames[rootNote + i];
+    }
+  }
+}
+
+nextIntervalBtn.addEventListener('click', () => {
+  console.log(getIntervalNote());
+});
