@@ -3,12 +3,12 @@ const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone
 
 const newIntervalBtn = document.getElementById('hear-new-btn');
 
-let rootNote = null;
+let rootNoteIndex = null;
 
 newIntervalBtn.addEventListener('click', () => {
-  rootNote = Math.floor(Math.random() * allNoteNames.length);
-  let audio = new Audio(`audio/${allNoteNames[rootNote]}.mp3`);
-  console.log(audio);
+  rootNoteIndex = Math.floor(Math.random() * allNoteNames.length);
+  let encodedNote = encodeURIComponent(allNoteNames[rootNoteIndex]);
+  let audio = new Audio('audio/' + encodedNote + '.mp3');
   audio.play();
   console.log(getIntervalNote());
 });
@@ -29,11 +29,11 @@ newGameBtn.addEventListener('click', () => {
 
 function getIntervalNote() {
   const randomInterval = Math.floor(Math.random() * chosenIntervals.length);
-  console.log(allNoteNames[rootNote]);
+  console.log(allNoteNames[rootNoteIndex]);
   console.log(chosenIntervals[randomInterval]);
   for (let i = 0; i < allIntervals.length; i++) {
     if (allIntervals[i] === chosenIntervals[randomInterval]) {
-      return allNoteNames[rootNote + i];
+      return allNoteNames[rootNoteIndex + i];
     }
   }
 }
