@@ -2,7 +2,14 @@ const allNoteNames = ['A0', 'A#0', 'B0', 'C1', 'C#1', 'D1', 'D#1', 'E1', 'F1', '
 const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone', 'per5', 'min6', 'maj6', 'min7', 'maj7', 'octave'];
 
 const newIntervalBtn = document.getElementById('hear-new-btn');
+
+let rootNote = null;
+
 newIntervalBtn.addEventListener('click', () => {
+  rootNote = Math.floor(Math.random() * allNoteNames.length);
+  let audio = new Audio(`audio/${allNoteNames[rootNote]}.mp3`);
+  console.log(audio);
+  audio.play();
   console.log(getIntervalNote());
 });
 
@@ -21,7 +28,6 @@ newGameBtn.addEventListener('click', () => {
 })
 
 function getIntervalNote() {
-  const rootNote = Math.floor(Math.random() * allNoteNames.length);
   const randomInterval = Math.floor(Math.random() * chosenIntervals.length);
   console.log(allNoteNames[rootNote]);
   console.log(chosenIntervals[randomInterval]);
