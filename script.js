@@ -12,7 +12,7 @@ newIntervalBtn.addEventListener('click', () => {
     return note;
   }
 
-  rootNoteIndex = Math.floor(Math.random() * allNoteNames.length);
+  rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
   const rootNote = getAudioFromIndex(rootNoteIndex);
   rootNote.play();
 
