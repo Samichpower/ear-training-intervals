@@ -5,13 +5,6 @@ GOALS FOR THIS PROJECT:
 -Add a 'hands-off' mode, where I can hit start and it will play a random interval, wait a few seconds for me to mentally guess the answer, then give the answer, before doing it again. The goal of this is to allow me to put my phone in my pocket while I work for some passive ear training.
 
 
-onRoundStart
-create array from selected intervals.
-function getRandomInterval
-Select randomly from an array of all notes for the root note.
-Then get a random item from an array of the chosen intervals.
-How to correspond the interval choice with the root note? If else statements would work, but I feel like there's an easier way.
-if randomArrayInterval = majorThird, return allNotesArray[root + 5]
 
-Actually that could be doable. Simply have a seperate function to handle that for all with parameters for root and chosen interval.
-getRandomInterval(rootNote, randomInterval)
+NOTES
+On new game, lock interval-selection-list and append interval buttons to active-game-intervals container
