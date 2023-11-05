@@ -5,7 +5,7 @@ let rootNoteIndex;
 let intervalNoteIndex;
 let rootNote;
 let intervalNote;
-let selectedIntervals;
+let selectedIntervals = [];
 let interval;
 
 function resetAudioPlayback() {
@@ -62,6 +62,19 @@ newGameBtn.addEventListener('click', () => {
     }
   })
   console.log(selectedIntervals);
+
+  function appendIntervalButtons() {
+    const buttonContainer = document.getElementById('interval-buttons');
+    buttonContainer.innerHTML = '';
+    for (let i = 0; i < selectedIntervals.length; i++) {
+      const newButton = document.createElement('button');
+      newButton.className = 'interval-button';
+      newButton.id = selectedIntervals[i];
+      newButton.textContent = selectedIntervals[i];
+      buttonContainer.appendChild(newButton);
+    }
+  }
+  appendIntervalButtons();
 })
 
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
