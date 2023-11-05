@@ -53,6 +53,11 @@ function playNotes(noteTiming) {
   }, noteTiming);
 }
 
+function checkAnswer() {
+
+}
+
+
 const newGameBtn = document.getElementById('new-game-btn');
 newGameBtn.addEventListener('click', () => {
   const intervalChoices = document.querySelectorAll('.interval');
@@ -73,6 +78,14 @@ newGameBtn.addEventListener('click', () => {
       newButton.id = selectedIntervals[i];
       newButton.textContent = selectedIntervals[i];
       buttonContainer.appendChild(newButton);
+      
+      newButton.addEventListener('click', (e) => {
+        if (e.target.id === interval) {
+          console.log('correct');
+        } else {
+          console.log('wrong')
+        }
+      })
     }
   }
   appendIntervalButtons();
