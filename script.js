@@ -6,6 +6,10 @@ const newIntervalBtn = document.getElementById('hear-new-btn');
 let rootNoteIndex = null;
 
 newIntervalBtn.addEventListener('click', () => {
+  getNextInterval(800);
+});
+
+function getNextInterval(noteTiming) {
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
     const note = new Audio('audio/' + encodedNote + '.mp3');
@@ -21,8 +25,8 @@ newIntervalBtn.addEventListener('click', () => {
   setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
-  }, 800);
-});
+  }, noteTiming);
+}
 
 let chosenIntervals;
 
