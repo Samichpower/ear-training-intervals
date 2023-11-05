@@ -2,14 +2,23 @@ const allNoteNames = ['A0', 'A#0', 'B0', 'C1', 'C#1', 'D1', 'D#1', 'E1', 'F1', '
 const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone', 'per5', 'min6', 'maj6', 'min7', 'maj7', 'octave'];
 
 const newIntervalBtn = document.getElementById('hear-new-btn');
-
-let rootNoteIndex = null;
-
 newIntervalBtn.addEventListener('click', () => {
-  getNextInterval(800);
+  getNextInterval();
+  playNotes(750);
 });
 
-function getNextInterval(noteTiming) {
+const repeatIntervalBtn = document.getElementById('hear-again-btn');
+repeatIntervalBtn.addEventListener('click', () => {
+  playNotes(750);
+})
+
+
+let rootNoteIndex;
+let intervalNoteIndex;
+let rootNote;
+let intervalNote;
+
+function getNextInterval() {
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
     const note = new Audio('audio/' + encodedNote + '.mp3');
@@ -17,16 +26,20 @@ function getNextInterval(noteTiming) {
   }
 
   rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
-  const rootNote = getAudioFromIndex(rootNoteIndex);
-  rootNote.play();
+  rootNote = getAudioFromIndex(rootNoteIndex);
 
-  let intervalNoteIndex = getIntervalNoteIndex();
-  const intervalNote = getAudioFromIndex(intervalNoteIndex);
+  intervalNoteIndex = getIntervalNoteIndex();
+  intervalNote = getAudioFromIndex(intervalNoteIndex);
+}
+
+function playNotes(noteTiming) {
+  rootNote.play();
   setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
   }, noteTiming);
 }
+
 
 let chosenIntervals;
 
