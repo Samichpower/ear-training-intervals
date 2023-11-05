@@ -89,6 +89,8 @@ newGameBtn.addEventListener('click', () => {
     }
   }
   appendIntervalButtons();
+  getNextInterval();
+  playNotes(750);
 })
 
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
