@@ -18,22 +18,6 @@ let intervalNoteIndex;
 let rootNote;
 let intervalNote;
 
-function getNextInterval() {
-  resetAudioPlayback();
-
-  function getAudioFromIndex(index) {
-    const encodedNote = encodeURIComponent(allNoteNames[index]);
-    const note = new Audio('audio/' + encodedNote + '.mp3');
-    return note;
-  }
-
-  rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
-  rootNote = getAudioFromIndex(rootNoteIndex);
-
-  intervalNoteIndex = getIntervalNoteIndex();
-  intervalNote = getAudioFromIndex(intervalNoteIndex);
-}
-
 function resetAudioPlayback() {
   if (!rootNote) return;
   rootNote.pause();
@@ -42,6 +26,21 @@ function resetAudioPlayback() {
   intervalNote.currentTime = 0;
   rootNote.volume = 1;
 }
+
+function getNextInterval() {
+  resetAudioPlayback();
+  function getAudioFromIndex(index) {
+    const encodedNote = encodeURIComponent(allNoteNames[index]);
+    const note = new Audio('audio/' + encodedNote + '.mp3');
+    return note;
+  }
+
+  rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
+  rootNote = getAudioFromIndex(rootNoteIndex);
+  intervalNoteIndex = getIntervalNoteIndex();
+  intervalNote = getAudioFromIndex(intervalNoteIndex);
+}
+
 
 function playNotes(noteTiming) {
   resetAudioPlayback();
