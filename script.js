@@ -33,13 +33,16 @@ function getNextInterval() {
 }
 
 function playNotes(noteTiming) {
+  rootNote.pause();
+  intervalNote.pause();
+  rootNote.currentTime = 0;
+  intervalNote.currentTime = 0;
+  rootNote.volume = 1;
+
   rootNote.play();
   setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
-    setTimeout(() => {
-      rootNote.volume = 1;
-    }, noteTiming);
   }, noteTiming);
 }
 
