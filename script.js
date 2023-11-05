@@ -8,6 +8,11 @@ let intervalNote;
 let selectedIntervals = [];
 let interval;
 
+const scoreCorrectDisplay = document.getElementById('score-correct');
+const scoreTotalDisplay = document.getElementById('score-total');
+let scoreCorrect;
+let scoreTotal;
+
 function resetAudioPlayback() {
   if (!rootNote) return;
   rootNote.pause();
@@ -53,10 +58,6 @@ function playNotes(noteTiming) {
   }, noteTiming);
 }
 
-function checkAnswer() {
-
-}
-
 
 const newGameBtn = document.getElementById('new-game-btn');
 newGameBtn.addEventListener('click', () => {
@@ -81,13 +82,19 @@ newGameBtn.addEventListener('click', () => {
       
       newButton.addEventListener('click', (e) => {
         if (e.target.id === interval) {
-          console.log('correct');
+          scoreCorrectDisplay.innerHTML = ++scoreCorrect;
+          scoreTotalDisplay.innerHTML = ++scoreTotal;
         } else {
-          console.log('wrong')
+          scoreTotalDisplay.innerHTML = ++scoreTotal;
         }
       })
     }
   }
+  scoreCorrect = 0;
+  scoreTotal = 0;
+  scoreCorrectDisplay.innerHTML = 0;
+  scoreTotalDisplay.innerHTML = 0;
+
   appendIntervalButtons();
   getNextInterval();
   playNotes(750);
