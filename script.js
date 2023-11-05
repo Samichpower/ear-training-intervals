@@ -19,6 +19,8 @@ let rootNote;
 let intervalNote;
 
 function getNextInterval() {
+  resetAudioPlayback();
+
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
     const note = new Audio('audio/' + encodedNote + '.mp3');
@@ -32,13 +34,17 @@ function getNextInterval() {
   intervalNote = getAudioFromIndex(intervalNoteIndex);
 }
 
-function playNotes(noteTiming) {
+function resetAudioPlayback() {
+  if (!rootNote) return;
   rootNote.pause();
   intervalNote.pause();
   rootNote.currentTime = 0;
   intervalNote.currentTime = 0;
   rootNote.volume = 1;
+}
 
+function playNotes(noteTiming) {
+  resetAudioPlayback();
   rootNote.play();
   setTimeout(() => {
     rootNote.volume = 0.5;
@@ -47,26 +53,26 @@ function playNotes(noteTiming) {
 }
 
 
-let chosenIntervals;
+let selectedIntervals;
 
 const newGameBtn = document.getElementById('new-game-btn');
 newGameBtn.addEventListener('click', () => {
   const intervalChoices = document.querySelectorAll('.interval');
-  chosenIntervals = [];
+  selectedIntervals = [];
   intervalChoices.forEach((interval) => {
     if (interval.checked) {
-      chosenIntervals.push(interval.id);
+      selectedIntervals.push(interval.id);
     }
   })
-  console.log(chosenIntervals);
+  console.log(selectedIntervals);
 })
 
 function getIntervalNoteIndex() {
-  const randomInterval = Math.floor(Math.random() * chosenIntervals.length);
+  const randomInterval = Math.floor(Math.random() * selectedIntervals.length);
   console.log(allNoteNames[rootNoteIndex]);
-  console.log(chosenIntervals[randomInterval]);
+  console.log(selectedIntervals[randomInterval]);
   for (let i = 0; i < allIntervals.length; i++) {
-    if (allIntervals[i] === chosenIntervals[randomInterval]) {
+    if (allIntervals[i] === selectedIntervals[randomInterval]) {
       return rootNoteIndex + i;
     }
   }
