@@ -5,13 +5,8 @@ let rootNoteIndex;
 let intervalNoteIndex;
 let rootNote;
 let intervalNote;
-let selectedIntervals = [];
+let selectedIntervals;
 let interval;
-
-const scoreCorrectDisplay = document.getElementById('score-correct');
-const scoreTotalDisplay = document.getElementById('score-total');
-let scoreCorrect;
-let scoreTotal;
 
 function resetAudioPlayback() {
   if (!rootNote) return;
@@ -42,6 +37,8 @@ function getNextInterval() {
     }
   }
 
+  newIntervalBtn.disabled = true;
+
   rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
   rootNote = getAudioFromIndex(rootNoteIndex);
   intervalNoteIndex = getIntervalNoteIndex();
@@ -70,6 +67,11 @@ newGameBtn.addEventListener('click', () => {
   })
   console.log(selectedIntervals);
 
+  const scoreCorrectDisplay = document.getElementById('score-correct');
+  const scoreTotalDisplay = document.getElementById('score-total');
+  let scoreCorrect;
+  let scoreTotal;
+
   function appendIntervalButtons() {
     const buttonContainer = document.getElementById('interval-buttons');
     buttonContainer.innerHTML = '';
@@ -84,6 +86,7 @@ newGameBtn.addEventListener('click', () => {
         if (e.target.id === interval) {
           scoreCorrectDisplay.innerHTML = ++scoreCorrect;
           scoreTotalDisplay.innerHTML = ++scoreTotal;
+          newIntervalBtn.disabled = false;
         } else {
           scoreTotalDisplay.innerHTML = ++scoreTotal;
         }
