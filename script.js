@@ -45,6 +45,7 @@ function getNextInterval() {
 
 function playNotes(noteTiming) {
   resetAudioPlayback();
+  if (!rootNote) return;
   rootNote.play();
   setTimeout(() => {
     rootNote.volume = 0.5;
