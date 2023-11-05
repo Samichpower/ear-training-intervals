@@ -37,6 +37,9 @@ function playNotes(noteTiming) {
   setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
+    setTimeout(() => {
+      rootNote.volume = 1;
+    }, noteTiming);
   }, noteTiming);
 }
 
