@@ -25,6 +25,7 @@ function getNextInterval() {
   });
 
   isAnswered = false;
+  
   resetAudioPlayback();
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
@@ -94,15 +95,13 @@ newGameBtn.addEventListener('click', () => {
           newIntervalBtn.disabled = false;
           scoreCorrectDisplay.innerHTML = ++scoreCorrect;
           scoreTotalDisplay.innerHTML = ++scoreTotal;
-          e.target.disabled = true; 
-        } else if (e.target.id === interval) {
+        } else if (e.target.id !== interval && !isAnswered) {
           scoreTotalDisplay.innerHTML = ++scoreTotal;
+        } else if (e.target.id === interval) {
           newIntervalBtn.disabled = false;
-          e.target.disabled = true; 
-        } else {
-          e.target.disabled = true;
         }
         
+        e.target.disabled = true;        
         isAnswered = true;
       })
     }
