@@ -7,6 +7,7 @@ let rootNote;
 let intervalNote;
 let selectedIntervals;
 let interval;
+let isAnswered;
 
 function resetAudioPlayback() {
   if (!rootNote) return;
@@ -18,6 +19,12 @@ function resetAudioPlayback() {
 }
 
 function getNextInterval() {
+  const intervalButtons = document.querySelectorAll('.interval-button');
+  intervalButtons.forEach((button) => {
+    button.disabled = false;
+  });
+
+  isAnswered = false;
   resetAudioPlayback();
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
@@ -83,13 +90,20 @@ newGameBtn.addEventListener('click', () => {
       buttonContainer.appendChild(newButton);
       
       newButton.addEventListener('click', (e) => {
-        if (e.target.id === interval) {
+        if (e.target.id === interval && !isAnswered) {
+          newIntervalBtn.disabled = false;
           scoreCorrectDisplay.innerHTML = ++scoreCorrect;
           scoreTotalDisplay.innerHTML = ++scoreTotal;
-          newIntervalBtn.disabled = false;
-        } else {
+          e.target.disabled = true; 
+        } else if (e.target.id === interval) {
           scoreTotalDisplay.innerHTML = ++scoreTotal;
+          newIntervalBtn.disabled = false;
+          e.target.disabled = true; 
+        } else {
+          e.target.disabled = true;
         }
+        
+        isAnswered = true;
       })
     }
   }
