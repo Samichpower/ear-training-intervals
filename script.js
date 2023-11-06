@@ -25,8 +25,8 @@ function getNextInterval() {
   });
 
   isAnswered = false;
-  
   resetAudioPlayback();
+
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
     const note = new Audio('audio/' + encodedNote + '.mp3');
@@ -36,8 +36,6 @@ function getNextInterval() {
   function getIntervalNoteIndex() {
     const randomInterval = Math.floor(Math.random() * selectedIntervals.length);
     interval = selectedIntervals[randomInterval];
-    console.log(allNoteNames[rootNoteIndex]);
-    console.log(interval);
     for (let i = 0; i < allIntervals.length; i++) {
       if (allIntervals[i] === interval) {
         return rootNoteIndex + i;
@@ -46,7 +44,6 @@ function getNextInterval() {
   }
 
   newIntervalBtn.disabled = true;
-
   rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
   rootNote = getAudioFromIndex(rootNoteIndex);
   intervalNoteIndex = getIntervalNoteIndex();
@@ -65,6 +62,9 @@ function playNotes(noteTiming) {
 
 
 const newGameBtn = document.getElementById('new-game-btn');
+const repeatIntervalBtn = document.getElementById('hear-again-btn');
+const newIntervalBtn = document.getElementById('hear-new-btn');
+
 newGameBtn.addEventListener('click', () => {
   const intervalChoices = document.querySelectorAll('.interval');
   selectedIntervals = [];
@@ -73,7 +73,6 @@ newGameBtn.addEventListener('click', () => {
       selectedIntervals.push(interval.id);
     }
   })
-  console.log(selectedIntervals);
 
   const scoreCorrectDisplay = document.getElementById('score-correct');
   const scoreTotalDisplay = document.getElementById('score-total');
@@ -84,13 +83,13 @@ newGameBtn.addEventListener('click', () => {
     const buttonContainer = document.getElementById('interval-buttons');
     buttonContainer.innerHTML = '';
     for (let i = 0; i < selectedIntervals.length; i++) {
-      const newButton = document.createElement('button');
-      newButton.className = 'interval-button';
-      newButton.id = selectedIntervals[i];
-      newButton.textContent = selectedIntervals[i];
-      buttonContainer.appendChild(newButton);
-      
-      newButton.addEventListener('click', (e) => {
+      const intervalButton = document.createElement('button');
+      intervalButton.className = 'interval-button';
+      intervalButton.id = selectedIntervals[i];
+      intervalButton.textContent = selectedIntervals[i];
+      buttonContainer.appendChild(intervalButton);
+
+      intervalButton.addEventListener('click', (e) => {
         if (e.target.id === interval && !isAnswered) {
           newIntervalBtn.disabled = false;
           scoreCorrectDisplay.innerHTML = ++scoreCorrect;
@@ -100,28 +99,25 @@ newGameBtn.addEventListener('click', () => {
         } else if (e.target.id === interval) {
           newIntervalBtn.disabled = false;
         }
-        
-        e.target.disabled = true;        
+        e.target.disabled = true;
         isAnswered = true;
       })
     }
   }
+  
   scoreCorrect = 0;
   scoreTotal = 0;
   scoreCorrectDisplay.innerHTML = 0;
   scoreTotalDisplay.innerHTML = 0;
-
   appendIntervalButtons();
   getNextInterval();
   playNotes(750);
 })
 
-const repeatIntervalBtn = document.getElementById('hear-again-btn');
 repeatIntervalBtn.addEventListener('click', () => {
   playNotes(750);
 })
 
-const newIntervalBtn = document.getElementById('hear-new-btn');
 newIntervalBtn.addEventListener('click', () => {
   getNextInterval();
   playNotes(750);
