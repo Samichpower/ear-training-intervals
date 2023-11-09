@@ -85,3 +85,19 @@ body {
 .button-container:first-child button {
 	margin: 0px;
 }
+
+
+.center-text {
+	text-align: center;
+}
+
+#score-container p {
+	display: inline;
+	text-decoration: underline;
+}
+
+#interval-selection-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
