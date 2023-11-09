@@ -15,7 +15,6 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
 }
@@ -40,4 +39,49 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+/* COLOR PALETTE
+##332F2E - DARK
+#61504E - LIGHTER DARK
+#946159 - MID
+#C75F50 - LIGHT RED
+#FA4D31 - RED
+*/
+
+html {
+	font-size: 16px;
+	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+body {
+	background-color: #111111;
+	display: flex;
+	justify-content: center;
+}
+
+#main-container {
+	background-color: #cf7566;
+	margin-top: 24px;
+	width: auto;
+}
+
+#top-buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 5px;
+	font-size: 0;
+}
+
+.button-container button {
+	margin: 0px 5px;
+}
+
+.button-container:first-child button {
+	margin: 0px;
 }
