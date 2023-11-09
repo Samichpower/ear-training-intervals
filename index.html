@@ -7,31 +7,36 @@
   <title>Ear Training Intervals</title>
 </head>
 <body>
-  <h1>EAR TRAINING INTERVALS</h1>
-  <button id="new-game-btn">START</button>
-  <button id="hear-again-btn">Hear Again</button>
-  <button id="hear-new-btn">Hear New</button>
-  <div id="interval-buttons"></div>
-  <div id="score-container">
-    <span id="score-correct">0</span> of <span id="score-total">0</span>
-  </div>
-  <div id="interval-selection-list">
-    <p>Selected Intervals</p>
-    <ul>
-      <li><label><input type="checkbox" class="interval" id="unison">unison</label></li>
-      <li><label><input type="checkbox" class="interval" id="min2">min2</label></li>
-      <li><label><input type="checkbox" class="interval" id="maj2">maj2</label></li>
-      <li><label><input type="checkbox" class="interval" id="min3">min3</label></li>
-      <li><label><input type="checkbox" class="interval" id="maj3">maj3</label></li>
-      <li><label><input type="checkbox" class="interval" id="per4">per4</label></li>
-      <li><label><input type="checkbox" class="interval" id="tritone">tritone</label></li>
-      <li><label><input type="checkbox" class="interval" id="per5">per5</label></li>
-      <li><label><input type="checkbox" class="interval" id="min6">min6</label></li>
-      <li><label><input type="checkbox" class="interval" id="maj6">maj6</label></li>
-      <li><label><input type="checkbox" class="interval" id="min7">min7</label></li>
-      <li><label><input type="checkbox" class="interval" id="maj7">maj7</label></li>
-      <li><label><input type="checkbox" class="interval" id="octave">octave</label></li>
-    </ul>
+  <div id="main-container">
+    <h1>Intervals</h1>
+    <div id="top-buttons-container">
+      <button id="new-game-btn">Start</button>
+      <button id="stop-btn">Stop</button>
+      <button id="hear-again-btn">Hear Again</button>
+      <button id="hear-new-btn">Hear Next</button>
+      <div id="interval-buttons"></div>
+    </div>
+    <div id="score-container">
+      <span id="score-correct">0</span> of <span id="score-total">0</span>
+    </div>
+    <div id="interval-selection-list">
+      <p>All Intervals</p>
+      <ul>
+        <li><label><input type="checkbox" class="interval" id="unison">Unison</label></li>
+        <li><label><input type="checkbox" class="interval" id="min2">Minor 2nd</label></li>
+        <li><label><input type="checkbox" class="interval" id="maj2">Major 2nd</label></li>
+        <li><label><input type="checkbox" class="interval" id="min3">Minor 3rd</label></li>
+        <li><label><input type="checkbox" class="interval" id="maj3">Major 3rd</label></li>
+        <li><label><input type="checkbox" class="interval" id="per4">Perfect 4th</label></li>
+        <li><label><input type="checkbox" class="interval" id="tritone">Tritone</label></li>
+        <li><label><input type="checkbox" class="interval" id="per5">Perfect 5th</label></li>
+        <li><label><input type="checkbox" class="interval" id="min6">Minor 6th</label></li>
+        <li><label><input type="checkbox" class="interval" id="maj6">Major 6th</label></li>
+        <li><label><input type="checkbox" class="interval" id="min7">Minor 7th</label></li>
+        <li><label><input type="checkbox" class="interval" id="maj7">Major 7th</label></li>
+        <li><label><input type="checkbox" class="interval" id="octave">Octave</label></li>
+      </ul>
+    </div>
   </div>
   
   <script src="script.js"></script>
