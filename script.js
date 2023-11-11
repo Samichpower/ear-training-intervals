@@ -77,8 +77,6 @@ const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
 const percentDisplay = document.getElementById('percent');
 let isGameStarted = false;
-let scoreCorrect;
-let scoreTotal;
 
 startGameBtn.addEventListener('click', () => {
   isGameStarted = true;
@@ -139,8 +137,8 @@ startGameBtn.addEventListener('click', () => {
     }
   }
   
-  scoreCorrect = 0;
-  scoreTotal = 0;
+  intervalActiveState.scoreCorrect = 0;
+  intervalActiveState.scoreTotal = 0;
   scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
   scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
   appendIntervalButtons();
