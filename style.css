@@ -93,14 +93,14 @@ body {
 	text-align: center;
 }
 
-#score-container {
+.score-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 8px;
 }
 
-#score-container p {
+.score-container p {
 	display: inline;
 	text-decoration: underline;
 }
@@ -114,4 +114,20 @@ body {
 #interval-selection-list ul {
 	border: 2px solid #111111;
 	padding: 0px 15px;
+}
+
+#statistics {
+	margin: 18px;
+}
+
+#statistics h2 {
+	text-decoration: underline;
+}
+
+#statistics .score-container {
+	padding: 8px;
+}
+
+#statistics .score-container p {
+	text-decoration: none;
 }

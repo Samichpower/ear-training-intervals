@@ -91,8 +91,17 @@ startGameBtn.addEventListener('click', () => {
     }
   })
   
-  const scoreCorrectDisplay = document.getElementById('score-correct');
-  const scoreTotalDisplay = document.getElementById('score-total');
+  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
+  const scoreTotalDisplay = document.querySelectorAll('.score-total');
+
+  function appendScores() {
+    scoreCorrectDisplay.forEach((score) => {
+      score.innerHTML = scoreCorrect;
+    });
+    scoreTotalDisplay.forEach((score) => {
+      score.innerHTML = scoreTotal;
+    })
+  }
 
   function appendIntervalButtons() {
     const intervalButtonContainer = document.getElementById('interval-buttons');
@@ -107,10 +116,12 @@ startGameBtn.addEventListener('click', () => {
       intervalButton.addEventListener('click', (e) => {
         if (e.target.id === interval && !isAnswered) {
           newIntervalBtn.disabled = false;
-          scoreCorrectDisplay.innerHTML = ++scoreCorrect;
-          scoreTotalDisplay.innerHTML = ++scoreTotal;
+          ++scoreCorrect;
+          ++scoreTotal;
+          appendScores();
         } else if (e.target.id !== interval && !isAnswered) {
-          scoreTotalDisplay.innerHTML = ++scoreTotal;
+          ++scoreTotal;
+          appendScores();
         } else if (e.target.id === interval) {
           newIntervalBtn.disabled = false;
         }
@@ -123,8 +134,8 @@ startGameBtn.addEventListener('click', () => {
   
   scoreCorrect = 0;
   scoreTotal = 0;
-  scoreCorrectDisplay.innerHTML = 0;
-  scoreTotalDisplay.innerHTML = 0;
+  scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
+  scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
   appendIntervalButtons();
   getNextInterval();
   playNotes(750);

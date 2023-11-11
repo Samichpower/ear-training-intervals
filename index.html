@@ -20,11 +20,11 @@
       </div>
       <div class="button-container" id="interval-buttons"></div>
     </div>
-    <div id="score-container" class="center-text">
-      <p><span id="score-correct">0</span> of <span id="score-total">0</span></p> :: <p><span id="percent">0</span>%</p>
+    <div class="score-container" class="center-text">
+      <p><span class="score-correct">0</span> of <span class="score-total">0</span></p>
     </div>
     <div id="interval-selection-list">
-      <p class="center-text">All Intervals</p>
+      <h2 class="center-text">All Intervals</h2>
       <ul>
         <li><label><input type="checkbox" class="interval" id="unison">Unison</label></li>
         <li><label><input type="checkbox" class="interval" id="min2">Minor 2nd</label></li>
@@ -40,6 +40,12 @@
         <li><label><input type="checkbox" class="interval" id="maj7">Major 7th</label></li>
         <li><label><input type="checkbox" class="interval" id="octave">Octave</label></li>
       </ul>
+    </div>
+    <div id="statistics">
+      <h2 class="center-text">Statistics</h2>
+      <div class="score-container" class="center-text">
+        <p>Total:  <span class="score-correct">0</span> of <span class="score-total">0</span> :: <span id="percent">0</span>%</p>
+      </div>
     </div>
   </div>
   
