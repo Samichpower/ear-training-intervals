@@ -26,7 +26,6 @@ function playNotes(noteTiming) {
   }, noteTiming);
 }
 
-
 let selectedIntervals;
 let interval;
 let isAnswered;
@@ -65,19 +64,24 @@ function getNextInterval() {
 
 
 const startGameBtn = document.getElementById('new-game-btn');
+const stopGameBtn = document.getElementById('stop-btn');
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
+const percentDisplay = document.getElementById('percent');
+let isGameStarted = false;
 let scoreCorrect;
 let scoreTotal;
 
 function getPercentage() {
-  const percentDisplay = document.getElementById('percent');
   percentDisplay.innerHTML = '';
   let percent = Math.round((scoreCorrect / scoreTotal) * 100);
   percentDisplay.innerHTML = percent;
 }
 
 startGameBtn.addEventListener('click', () => {
+  isGameStarted = true;
+  doGameState();
+  percentDisplay.innerHTML = '0';
   const intervalChoices = document.querySelectorAll('.interval');
   selectedIntervals = [];
   intervalChoices.forEach((interval) => {
@@ -85,19 +89,19 @@ startGameBtn.addEventListener('click', () => {
       selectedIntervals.push(interval.id);
     }
   })
-
+  
   const scoreCorrectDisplay = document.getElementById('score-correct');
   const scoreTotalDisplay = document.getElementById('score-total');
 
   function appendIntervalButtons() {
-    const buttonContainer = document.getElementById('interval-buttons');
-    buttonContainer.innerHTML = '';
+    const intervalButtonContainer = document.getElementById('interval-buttons');
+    intervalButtonContainer.innerHTML = '';
     for (let i = 0; i < selectedIntervals.length; i++) {
       const intervalButton = document.createElement('button');
       intervalButton.className = 'interval-button';
       intervalButton.id = selectedIntervals[i];
       intervalButton.textContent = selectedIntervals[i];
-      buttonContainer.appendChild(intervalButton);
+      intervalButtonContainer.appendChild(intervalButton);
 
       intervalButton.addEventListener('click', (e) => {
         if (e.target.id === interval && !isAnswered) {
@@ -125,6 +129,11 @@ startGameBtn.addEventListener('click', () => {
   playNotes(750);
 })
 
+stopGameBtn.addEventListener('click', () => {
+  isGameStarted = false;
+  doGameState();
+})
+
 repeatIntervalBtn.addEventListener('click', () => {
   playNotes(750);
 })
@@ -133,3 +142,19 @@ newIntervalBtn.addEventListener('click', () => {
   getNextInterval();
   playNotes(750);
 });
+
+
+function doGameState() {
+  const hearButtons = document.getElementById('hear-buttons');
+  if (!isGameStarted) {
+    hearButtons.style.display = 'none';
+    startGameBtn.disabled = false;
+    stopGameBtn.disabled = true;
+  } else if (isGameStarted) {
+    hearButtons.style.display = '';
+    startGameBtn.disabled = true;
+    stopGameBtn.disabled = false;
+  }
+}
+
+doGameState();
