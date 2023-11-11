@@ -35,7 +35,6 @@ function playNotes(noteTiming) {
 }
 
 let selectedIntervals;
-let interval;
 
 function getNextInterval() {
   const intervalButtons = document.querySelectorAll('.interval-button');
@@ -54,9 +53,9 @@ function getNextInterval() {
 
   function getIntervalNoteIndex() {
     const randomInterval = Math.floor(Math.random() * selectedIntervals.length);
-    interval = selectedIntervals[randomInterval];
+    intervalActiveState.currentInterval = selectedIntervals[randomInterval];
     for (let i = 0; i < allIntervals.length; i++) {
-      if (allIntervals[i] === interval) {
+      if (allIntervals[i] === intervalActiveState.currentInterval) {
         return rootNoteIndex + i;
       }
     }
@@ -116,15 +115,15 @@ startGameBtn.addEventListener('click', () => {
       intervalAnswerContainer.appendChild(intervalButton);
 
       intervalButton.addEventListener('click', (btn) => {
-        if (btn.target.id === interval && !intervalActiveState.isAnswered) {
+        if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) {
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
           appendScores();
-        } else if (btn.target.id !== interval && !intervalActiveState.isAnswered) {
+        } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) {
           intervalActiveState.scoreTotal += 1;
           appendScores();
-        } else if (btn.target.id === interval) {
+        } else if (btn.target.id === intervalActiveState.currentInterval) {
           newIntervalBtn.disabled = false;
         }
         btn.target.disabled = true;
