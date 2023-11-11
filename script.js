@@ -71,6 +71,31 @@ const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
 const percentDisplay = document.getElementById('percent');
 
+function setGameState() {
+  const hearButtons = document.getElementById('hear-buttons');
+  const intervalButtonContainer = document.getElementById('interval-buttons');
+  const intervalSelectionList = document.querySelectorAll('.interval');
+  if (!intervalActiveState.isGameStarted) {
+    hearButtons.style.display = 'none';
+    startGameBtn.disabled = false;
+    stopGameBtn.disabled = true;
+    intervalButtonContainer.innerHTML = '';
+    intervalSelectionList.forEach((item) => {
+      item.disabled = false;
+    });
+  } else if (intervalActiveState.isGameStarted) {
+    hearButtons.style.display = '';
+    startGameBtn.disabled = true;
+    stopGameBtn.disabled = false;
+    percentDisplay.innerHTML = '0';
+    intervalSelectionList.forEach((item) => {
+      item.disabled = true;
+    });
+  }
+}
+
+setGameState();
+
 startGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = true;
   setGameState();
@@ -151,29 +176,3 @@ newIntervalBtn.addEventListener('click', () => {
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
-
-
-function setGameState() {
-  const hearButtons = document.getElementById('hear-buttons');
-  const intervalButtonContainer = document.getElementById('interval-buttons');
-  const intervalSelectionList = document.querySelectorAll('.interval');
-  if (!intervalActiveState.isGameStarted) {
-    hearButtons.style.display = 'none';
-    startGameBtn.disabled = false;
-    stopGameBtn.disabled = true;
-    intervalButtonContainer.innerHTML = '';
-    intervalSelectionList.forEach((item) => {
-      item.disabled = false;
-    });
-  } else if (intervalActiveState.isGameStarted) {
-    hearButtons.style.display = '';
-    startGameBtn.disabled = true;
-    stopGameBtn.disabled = false;
-    percentDisplay.innerHTML = '0';
-    intervalSelectionList.forEach((item) => {
-      item.disabled = true;
-    });
-  }
-}
-
-setGameState();
