@@ -3,6 +3,7 @@ const allIntervals = ['unison', 'min2', 'maj2', 'min3', 'maj3', 'per4', 'tritone
 
 const intervalActiveState = {
   rootNote: null,
+  intervalNote: null,
   currentInterval: null,
   scoreCorrect: 0,
   scoreTotal: 0,
@@ -10,12 +11,7 @@ const intervalActiveState = {
   isAnswered: false,
 }
 
-let rootNoteIndex;
-let intervalNoteIndex;
-let rootNote;
-let intervalNote;
-
-function resetAudioPlayback() {
+function resetAudioPlayback(rootNote, intervalNote) {;
   if (!rootNote) return;
   rootNote.pause();
   intervalNote.pause();
@@ -24,8 +20,8 @@ function resetAudioPlayback() {
   rootNote.volume = 1;
 }
 
-function playNotes(noteTiming) {
-  resetAudioPlayback();
+function playNotes(noteTiming, rootNote, intervalNote) {
+  resetAudioPlayback(rootNote, intervalNote);
   if (!rootNote) return;
   rootNote.play();
   setTimeout(() => {
@@ -43,7 +39,7 @@ function getNextInterval() {
   });
 
   intervalActiveState.isAnswered = false;
-  resetAudioPlayback();
+  resetAudioPlayback(intervalActiveState.rootNote, intervalActiveState.intervalNote);
 
   function getAudioFromIndex(index) {
     const encodedNote = encodeURIComponent(allNoteNames[index]);
@@ -62,10 +58,10 @@ function getNextInterval() {
   }
 
   newIntervalBtn.disabled = true;
-  rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
-  rootNote = getAudioFromIndex(rootNoteIndex);
-  intervalNoteIndex = getIntervalNoteIndex();
-  intervalNote = getAudioFromIndex(intervalNoteIndex);
+  const rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
+  const intervalNoteIndex = getIntervalNoteIndex();
+  intervalActiveState.rootNote = getAudioFromIndex(rootNoteIndex);
+  intervalActiveState.intervalNote = getAudioFromIndex(intervalNoteIndex);
 }
 
 
@@ -139,7 +135,7 @@ startGameBtn.addEventListener('click', () => {
   scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
   appendIntervalButtons();
   getNextInterval();
-  playNotes(750);
+  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 })
 
 stopGameBtn.addEventListener('click', () => {
@@ -148,12 +144,12 @@ stopGameBtn.addEventListener('click', () => {
 })
 
 repeatIntervalBtn.addEventListener('click', () => {
-  playNotes(750);
+  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 })
 
 newIntervalBtn.addEventListener('click', () => {
   getNextInterval();
-  playNotes(750);
+  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
 
 
