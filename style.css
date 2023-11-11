@@ -72,12 +72,18 @@ body {
 	width: auto;
 }
 
-#top-buttons {
+#top-content {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 5px;
 	font-size: 0;
+}
+
+#top-content p {
+	font-size: 1.25rem;
+	text-decoration: underline;
+	padding: 8px;
 }
 
 .button-container button {
@@ -93,18 +99,6 @@ body {
 	text-align: center;
 }
 
-.score-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 8px;
-}
-
-.score-container p {
-	display: inline;
-	text-decoration: underline;
-}
-
 #interval-selection-list {
 	display: flex;
 	flex-direction: column;
@@ -118,6 +112,7 @@ body {
 
 #statistics {
 	margin: 18px;
+	text-align: center;
 }
 
 #statistics h2 {
@@ -126,8 +121,4 @@ body {
 
 #statistics .score-container {
 	padding: 8px;
-}
-
-#statistics .score-container p {
-	text-decoration: none;
 }
