@@ -26,6 +26,7 @@ function playNotes(noteTiming) {
   }, noteTiming);
 }
 
+
 let selectedIntervals;
 let interval;
 let isAnswered;
@@ -62,7 +63,8 @@ function getNextInterval() {
   intervalNote = getAudioFromIndex(intervalNoteIndex);
 }
 
-const newGameBtn = document.getElementById('new-game-btn');
+
+const startGameBtn = document.getElementById('new-game-btn');
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
 let scoreCorrect;
@@ -75,7 +77,7 @@ function getPercentage() {
   percentDisplay.innerHTML = percent;
 }
 
-newGameBtn.addEventListener('click', () => {
+startGameBtn.addEventListener('click', () => {
   const intervalChoices = document.querySelectorAll('.interval');
   selectedIntervals = [];
   intervalChoices.forEach((interval) => {
