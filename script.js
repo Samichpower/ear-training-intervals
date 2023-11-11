@@ -82,9 +82,10 @@ startGameBtn.addEventListener('click', () => {
   isGameStarted = true;
   doGameState();
   percentDisplay.innerHTML = '0';
-  const intervalChoices = document.querySelectorAll('.interval');
+  
+  const intervalSelectionList = document.querySelectorAll('.interval');
   selectedIntervals = [];
-  intervalChoices.forEach((interval) => {
+  intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
     }
@@ -146,14 +147,23 @@ newIntervalBtn.addEventListener('click', () => {
 
 function doGameState() {
   const hearButtons = document.getElementById('hear-buttons');
+  const intervalButtonContainer = document.getElementById('interval-buttons');
+  const intervalSelectionList = document.querySelectorAll('.interval');
   if (!isGameStarted) {
     hearButtons.style.display = 'none';
     startGameBtn.disabled = false;
     stopGameBtn.disabled = true;
+    intervalButtonContainer.innerHTML = '';
+    intervalSelectionList.forEach((item) => {
+      item.disabled = false;
+    });
   } else if (isGameStarted) {
     hearButtons.style.display = '';
     startGameBtn.disabled = true;
     stopGameBtn.disabled = false;
+    intervalSelectionList.forEach((item) => {
+      item.disabled = true;
+    });
   }
 }
 
