@@ -72,16 +72,9 @@ let isGameStarted = false;
 let scoreCorrect;
 let scoreTotal;
 
-function getPercentage() {
-  percentDisplay.innerHTML = '';
-  let percent = Math.round((scoreCorrect / scoreTotal) * 100);
-  percentDisplay.innerHTML = percent;
-}
-
 startGameBtn.addEventListener('click', () => {
   isGameStarted = true;
   setGameState();
-  percentDisplay.innerHTML = '0';
   
   const intervalSelectionList = document.querySelectorAll('.interval');
   selectedIntervals = [];
@@ -101,17 +94,23 @@ startGameBtn.addEventListener('click', () => {
       });
       scoreTotalDisplay.forEach((score) => {
         score.innerHTML = scoreTotal;
-      })
+      });
+    }
+
+    function getPercentage() {
+      percentDisplay.innerHTML = '';
+      let percent = Math.round((scoreCorrect / scoreTotal) * 100);
+      percentDisplay.innerHTML = percent;
     }
     
-    const intervalButtonContainer = document.getElementById('interval-buttons');
-    intervalButtonContainer.innerHTML = '';
+    const intervalAnswerContainer = document.getElementById('interval-buttons');
+    intervalAnswerContainer.innerHTML = '';
     for (let i = 0; i < selectedIntervals.length; i++) {
       const intervalButton = document.createElement('button');
       intervalButton.className = 'interval-button';
       intervalButton.id = selectedIntervals[i];
       intervalButton.textContent = selectedIntervals[i];
-      intervalButtonContainer.appendChild(intervalButton);
+      intervalAnswerContainer.appendChild(intervalButton);
 
       intervalButton.addEventListener('click', (e) => {
         if (e.target.id === interval && !isAnswered) {
@@ -172,6 +171,7 @@ function setGameState() {
     hearButtons.style.display = '';
     startGameBtn.disabled = true;
     stopGameBtn.disabled = false;
+    percentDisplay.innerHTML = '0';
     intervalSelectionList.forEach((item) => {
       item.disabled = true;
     });
