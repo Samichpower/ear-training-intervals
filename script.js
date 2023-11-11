@@ -94,16 +94,16 @@ startGameBtn.addEventListener('click', () => {
   const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
   const scoreTotalDisplay = document.querySelectorAll('.score-total');
 
-  function appendScores() {
-    scoreCorrectDisplay.forEach((score) => {
-      score.innerHTML = scoreCorrect;
-    });
-    scoreTotalDisplay.forEach((score) => {
-      score.innerHTML = scoreTotal;
-    })
-  }
-
   function appendIntervalButtons() {
+    function appendScores() {
+      scoreCorrectDisplay.forEach((score) => {
+        score.innerHTML = scoreCorrect;
+      });
+      scoreTotalDisplay.forEach((score) => {
+        score.innerHTML = scoreTotal;
+      })
+    }
+    
     const intervalButtonContainer = document.getElementById('interval-buttons');
     intervalButtonContainer.innerHTML = '';
     for (let i = 0; i < selectedIntervals.length; i++) {
