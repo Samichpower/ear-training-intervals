@@ -82,6 +82,7 @@ body {
 
 .button-container button {
 	margin: 0px 5px;
+	font-size: 1.25rem;
 }
 
 .button-container:first-child button {
