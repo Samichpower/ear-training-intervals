@@ -65,6 +65,15 @@ function getNextInterval() {
 const newGameBtn = document.getElementById('new-game-btn');
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
+let scoreCorrect;
+let scoreTotal;
+
+function getPercentage() {
+  const percentDisplay = document.getElementById('percent');
+  percentDisplay.innerHTML = '';
+  let percent = Math.round((scoreCorrect / scoreTotal) * 100);
+  percentDisplay.innerHTML = percent;
+}
 
 newGameBtn.addEventListener('click', () => {
   const intervalChoices = document.querySelectorAll('.interval');
@@ -77,8 +86,6 @@ newGameBtn.addEventListener('click', () => {
 
   const scoreCorrectDisplay = document.getElementById('score-correct');
   const scoreTotalDisplay = document.getElementById('score-total');
-  let scoreCorrect;
-  let scoreTotal;
 
   function appendIntervalButtons() {
     const buttonContainer = document.getElementById('interval-buttons');
@@ -102,6 +109,7 @@ newGameBtn.addEventListener('click', () => {
         }
         e.target.disabled = true;
         isAnswered = true;
+        getPercentage();
       })
     }
   }
