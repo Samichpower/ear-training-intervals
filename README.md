@@ -6,6 +6,3 @@ GOALS FOR THIS PROJECT:
 -Add a 'hands-off' mode, where I can hit start and it will play a random interval, wait a few seconds for me to mentally guess the answer, then give the answer, before doing it again. The goal of this is to allow me to put my phone in my pocket while I work for some passive ear training.
 
 
-
-NOTES
-On new game, lock interval-selection-list and append interval buttons to active-game-intervals container
