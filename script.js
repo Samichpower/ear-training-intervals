@@ -80,7 +80,7 @@ function getPercentage() {
 
 startGameBtn.addEventListener('click', () => {
   isGameStarted = true;
-  doGameState();
+  setGameState();
   percentDisplay.innerHTML = '0';
   
   const intervalSelectionList = document.querySelectorAll('.interval');
@@ -143,7 +143,7 @@ startGameBtn.addEventListener('click', () => {
 
 stopGameBtn.addEventListener('click', () => {
   isGameStarted = false;
-  doGameState();
+  setGameState();
 })
 
 repeatIntervalBtn.addEventListener('click', () => {
@@ -156,7 +156,7 @@ newIntervalBtn.addEventListener('click', () => {
 });
 
 
-function doGameState() {
+function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
   const intervalButtonContainer = document.getElementById('interval-buttons');
   const intervalSelectionList = document.querySelectorAll('.interval');
@@ -178,4 +178,4 @@ function doGameState() {
   }
 }
 
-doGameState();
+setGameState();
