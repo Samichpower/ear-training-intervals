@@ -7,6 +7,8 @@ const intervalActiveState = {
   currentInterval: null,
   scoreCorrect: 0,
   scoreTotal: 0,
+  bestCorrectStreak: 0,
+  currentStreak: 0,
   isGameStarted: false,
   isAnswered: false,
 }
@@ -75,7 +77,7 @@ function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
   const intervalButtonContainer = document.getElementById('interval-buttons');
   const intervalSelectionList = document.querySelectorAll('.interval');
-  if (!intervalActiveState.isGameStarted) {
+  if (!intervalActiveState.isGameStarted) { //Game is not started
     hearButtons.style.display = 'none';
     startGameBtn.disabled = false;
     stopGameBtn.disabled = true;
@@ -83,11 +85,13 @@ function setGameState() {
     intervalSelectionList.forEach((item) => {
       item.disabled = false;
     });
-  } else if (intervalActiveState.isGameStarted) {
+  } else if (intervalActiveState.isGameStarted) { //Game is started
     hearButtons.style.display = '';
     startGameBtn.disabled = true;
     stopGameBtn.disabled = false;
     percentDisplay.innerHTML = '0';
+    intervalActiveState.currentStreak = 0;
+    intervalActiveState.bestCorrectStreak = 0;
     intervalSelectionList.forEach((item) => {
       item.disabled = true;
     });
@@ -97,8 +101,13 @@ function setGameState() {
 setGameState();
 
 startGameBtn.addEventListener('click', () => {
+  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
+  const scoreTotalDisplay = document.querySelectorAll('.score-total');
+  const bestCorrectStreakDisplay = document.getElementById('best-streak');
+
   intervalActiveState.isGameStarted = true;
   setGameState();
+  bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
   
   const intervalSelectionList = document.querySelectorAll('.interval');
   selectedIntervals = [];
@@ -107,9 +116,6 @@ startGameBtn.addEventListener('click', () => {
       selectedIntervals.push(interval.id);
     }
   })
-  
-  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
-  const scoreTotalDisplay = document.querySelectorAll('.score-total');
 
   function appendIntervalButtons() {
     function appendScores() {
@@ -119,6 +125,16 @@ startGameBtn.addEventListener('click', () => {
       scoreTotalDisplay.forEach((score) => {
         score.innerHTML = intervalActiveState.scoreTotal;
       });
+    }
+
+    function appendStreak() {
+      if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
+        intervalActiveState.bestCorrectStreak += 1;
+        intervalActiveState.currentStreak += 1;
+      } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
+        intervalActiveState.currentStreak += 1;
+      }
+      bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
     }
 
     function getPercentage() {
@@ -136,15 +152,17 @@ startGameBtn.addEventListener('click', () => {
       intervalAnswerContainer.appendChild(intervalButton);
 
       intervalButton.addEventListener('click', (btn) => {
-        if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) {
+        if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //Correct Answer
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
+          appendStreak();
           appendScores();
-        } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) {
+        } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
           intervalActiveState.scoreTotal += 1;
+          intervalActiveState.currentStreak = 0;
           appendScores();
-        } else if (btn.target.id === intervalActiveState.currentInterval) {
+        } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
           newIntervalBtn.disabled = false;
         }
         btn.target.disabled = true;
