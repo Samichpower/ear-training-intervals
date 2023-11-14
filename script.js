@@ -194,3 +194,15 @@ newIntervalBtn.addEventListener('click', () => {
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
+
+
+const statisticsHeader = document.getElementById('statistics-header');
+const statisticsContainer = document.getElementById('statistics');
+
+statisticsHeader.addEventListener('click', () => {
+  if (statisticsContainer.style.display === 'none') {
+    statisticsContainer.style.display = 'block';
+  } else {
+    statisticsContainer.style.display = 'none';
+  }
+})

@@ -111,15 +111,15 @@ body {
 	padding: 0px 15px;
 }
 
-#statistics {
+#bottom-content {
 	margin: 18px;
 	text-align: center;
 }
 
-#statistics h2 {
+#bottom-content h2 {
 	text-decoration: underline;
 }
 
-#statistics .score-container {
+#bottom-content .score-container {
 	padding: 8px;
 }
