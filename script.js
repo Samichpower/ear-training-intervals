@@ -197,9 +197,9 @@ newIntervalBtn.addEventListener('click', () => {
 
 
 const statisticsHeader = document.getElementById('statistics-header');
-const statisticsContainer = document.getElementById('statistics');
 
 statisticsHeader.addEventListener('click', () => {
+  const statisticsContainer = document.getElementById('statistics');
   if (statisticsContainer.style.display === 'none') {
     statisticsContainer.style.display = 'block';
   } else {
