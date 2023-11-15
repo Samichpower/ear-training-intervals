@@ -179,16 +179,16 @@ startGameBtn.addEventListener('click', () => {
   appendIntervalButtons();
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-})
+});
 
 stopGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = false;
   setGameState();
-})
+});
 
 repeatIntervalBtn.addEventListener('click', () => {
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-})
+});
 
 newIntervalBtn.addEventListener('click', () => {
   getNextInterval();
@@ -205,4 +205,4 @@ statisticsHeader.addEventListener('click', () => {
   } else {
     statisticsContainer.style.display = 'none';
   }
-})
+});
