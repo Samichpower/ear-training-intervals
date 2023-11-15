@@ -131,6 +131,7 @@ startGameBtn.addEventListener('click', () => {
 
   function appendIntervalStats() {
     const intervalStatsContainer = document.getElementById('selected-interval-stats');
+    intervalStatsContainer.innerHTML = '';
     Object.keys(intervalStats).forEach((interval) => {
       intervalStatsContainer.innerHTML += `<p>${interval} - ${intervalStats[interval].correct}</p>`;
     })
