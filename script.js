@@ -109,13 +109,25 @@ startGameBtn.addEventListener('click', () => {
   setGameState();
   bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
   
-  const intervalSelectionList = document.querySelectorAll('.interval');
+  const intervalStats = {};
   selectedIntervals = [];
+  const intervalSelectionList = document.querySelectorAll('.interval');
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
+      intervalStats[interval.id] = {correct: 0, total: 0};
     }
-  })
+  });
+
+  function updateIntervalStats(interval, isCorrect) {
+    if (isCorrect) {
+      intervalStats[interval].correct++;
+      intervalStats[interval].total++;
+    } else if (!isCorrect) {
+      intervalStats[interval].total++;
+    }
+    console.log(intervalStats);
+  }
 
   function appendIntervalButtons() {
     function appendScores() {
@@ -153,12 +165,14 @@ startGameBtn.addEventListener('click', () => {
 
       intervalButton.addEventListener('click', (btn) => {
         if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //Correct Answer
+          updateIntervalStats(intervalActiveState.currentInterval, true);
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
           appendStreak();
           appendScores();
         } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
+          updateIntervalStats(intervalActiveState.currentInterval, false);
           intervalActiveState.scoreTotal += 1;
           intervalActiveState.currentStreak = 0;
           appendScores();
