@@ -149,8 +149,8 @@ startGameBtn.addEventListener('click', () => {
       bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
     }
 
-    function getPercentage() {
-      let percent = Math.round((intervalActiveState.scoreCorrect / intervalActiveState.scoreTotal) * 100);
+    function getPercentage(correctNum, totalNum) {
+      let percent = Math.round((correctNum / totalNum) * 100);
       percentDisplay.innerHTML = percent;
     }
     
@@ -165,23 +165,23 @@ startGameBtn.addEventListener('click', () => {
 
       intervalButton.addEventListener('click', (btn) => {
         if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //Correct Answer
-          updateIntervalStats(intervalActiveState.currentInterval, true);
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
           appendStreak();
           appendScores();
+          updateIntervalStats(intervalActiveState.currentInterval, true);
         } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
-          updateIntervalStats(intervalActiveState.currentInterval, false);
           intervalActiveState.scoreTotal += 1;
           intervalActiveState.currentStreak = 0;
           appendScores();
+          updateIntervalStats(intervalActiveState.currentInterval, false);
         } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
           newIntervalBtn.disabled = false;
         }
         btn.target.disabled = true;
         intervalActiveState.isAnswered = true;
-        getPercentage();
+        getPercentage(intervalActiveState.scoreCorrect, intervalActiveState.scoreTotal);
       })
     }
   }
