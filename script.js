@@ -110,12 +110,22 @@ startGameBtn.addEventListener('click', () => {
   bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
   
   const intervalStats = {};
-  selectedIntervals = [];
   const intervalSelectionList = document.querySelectorAll('.interval');
+  selectedIntervals = [];
+
+  function appendIntervalStats(intervalText) {
+    const statsContainer = document.getElementById('selected-interval-stats');
+    const newPara = document.createElement('p');
+    newPara.textContent += intervalText;
+    statsContainer.appendChild(newPara);
+  }
+
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
       intervalStats[interval.id] = {correct: 0, total: 0};
+      const intervalTextContent = interval.parentNode.textContent.trim();
+      appendIntervalStats(intervalTextContent);
     }
   });
 
@@ -128,15 +138,6 @@ startGameBtn.addEventListener('click', () => {
     }
     console.log(intervalStats);
   }
-
-  function appendIntervalStats() {
-    const intervalStatsContainer = document.getElementById('selected-interval-stats');
-    intervalStatsContainer.innerHTML = '';
-    Object.keys(intervalStats).forEach((interval) => {
-      intervalStatsContainer.innerHTML += `<p>${interval} - ${intervalStats[interval].correct}</p>`;
-    })
-  }
-  appendIntervalStats();
 
   function appendIntervalButtons() {
     function appendScores() {
