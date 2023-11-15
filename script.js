@@ -158,8 +158,7 @@ startGameBtn.addEventListener('click', () => {
     }
 
     function getPercentage(correctNum, totalNum) {
-      let percent = Math.round((correctNum / totalNum) * 100);
-      percentDisplay.innerHTML = percent;
+      return Math.round((correctNum / totalNum) * 100);
     }
     
     const intervalAnswerContainer = document.getElementById('interval-buttons');
@@ -189,7 +188,7 @@ startGameBtn.addEventListener('click', () => {
         }
         btn.target.disabled = true;
         intervalActiveState.isAnswered = true;
-        getPercentage(intervalActiveState.scoreCorrect, intervalActiveState.scoreTotal);
+        percentDisplay.innerHTML = getPercentage(intervalActiveState.scoreCorrect, intervalActiveState.scoreTotal);
       })
     }
   }
