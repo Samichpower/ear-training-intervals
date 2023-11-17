@@ -116,10 +116,14 @@ startGameBtn.addEventListener('click', () => {
   selectedIntervals = [];
   setGameState();
 
+  const itemizedIntervalContainer = document.getElementById('selected-interval-stats');
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
       intervalActiveState.intervalStats[interval.id] = {correct: 0, total: 0};
+      const newPara = document.createElement('p');
+      newPara.textContent = `${interval.parentNode.textContent}`;
+      itemizedIntervalContainer.appendChild(newPara);
     }
   });
 
@@ -144,9 +148,9 @@ startGameBtn.addEventListener('click', () => {
           intervalActiveState.currentStreak += 1;
         }
       }
-      // function appendItemizedStats() {
+      function appendItemizedStats() {
 
-      // }
+      }
       if (isCorrect) {
         intervalActiveState.intervalStats[interval].correct++;
         intervalActiveState.intervalStats[interval].total++;
