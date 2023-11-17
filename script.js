@@ -113,19 +113,21 @@ startGameBtn.addEventListener('click', () => {
   const intervalSelectionList = document.querySelectorAll('.interval');
   selectedIntervals = [];
 
-  function appendIntervalStats(intervalText) {
-    const statsContainer = document.getElementById('selected-interval-stats');
+  function appendIntervalStats(intervalNode) {
+    intervalStats[intervalNode.id] = {correct: 0, total: 0};
+    const statsParentContainer = document.getElementById('selected-interval-stats');
     const newPara = document.createElement('p');
-    newPara.textContent += intervalText;
-    statsContainer.appendChild(newPara);
+    const nodeTextContent = intervalNode.parentNode.textContent.trim();
+    newPara.innerHTML = `${nodeTextContent}`
+
+
+    statsParentContainer.appendChild(newPara);
   }
 
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
-      intervalStats[interval.id] = {correct: 0, total: 0};
-      const intervalTextContent = interval.parentNode.textContent.trim();
-      appendIntervalStats(intervalTextContent);
+      appendIntervalStats(interval);
     }
   });
 
