@@ -14,6 +14,10 @@ const intervalActiveState = {
   intervalStats: {},
 }
 
+function getPercentage(correctNum, totalNum) {
+  return Math.round((correctNum / totalNum) * 100);
+}
+
 function resetAudioPlayback(rootNote, intervalNote) {;
   if (!rootNote) return;
   rootNote.pause();
@@ -78,6 +82,7 @@ function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
   const intervalButtonContainer = document.getElementById('interval-buttons');
   const intervalSelectionList = document.querySelectorAll('.interval');
+  const statsContainer = document.getElementById('statistics');
   if (!intervalActiveState.isGameStarted) { //Game is not started
     hearButtons.style.display = 'none';
     startGameBtn.disabled = false;
@@ -86,6 +91,7 @@ function setGameState() {
     intervalSelectionList.forEach((item) => {
       item.disabled = false;
     });
+    statsContainer.style.display = 'block';
   } else if (intervalActiveState.isGameStarted) { //Game is started
     hearButtons.style.display = '';
     startGameBtn.disabled = true;
@@ -96,6 +102,7 @@ function setGameState() {
     intervalSelectionList.forEach((item) => {
       item.disabled = true;
     });
+    statsContainer.style.display = 'none';
   }
 }
 
@@ -144,10 +151,6 @@ startGameBtn.addEventListener('click', () => {
         intervalActiveState.currentStreak += 1;
       }
     }
-
-    function getPercentage(correctNum, totalNum) {
-      return Math.round((correctNum / totalNum) * 100);
-    }
     
     const intervalAnswerContainer = document.getElementById('interval-buttons');
     intervalAnswerContainer.innerHTML = '';
@@ -191,11 +194,13 @@ startGameBtn.addEventListener('click', () => {
 });
 
 function appendStatsToPage() {
-  const bestCorrectStreakDisplay = document.getElementById('best-streak');
+  const newPara = document.createElement('p');
+  // newPara.textContent = 
 }
 
 stopGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = false;
+  appendStatsToPage();
   setGameState();
 });
 
