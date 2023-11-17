@@ -11,6 +11,7 @@ const intervalActiveState = {
   currentStreak: 0,
   isGameStarted: false,
   isAnswered: false,
+  intervalStats: {},
 }
 
 function resetAudioPlayback(rootNote, intervalNote) {;
@@ -103,18 +104,16 @@ setGameState();
 startGameBtn.addEventListener('click', () => {
   const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
   const scoreTotalDisplay = document.querySelectorAll('.score-total');
-  const bestCorrectStreakDisplay = document.getElementById('best-streak');
 
   intervalActiveState.isGameStarted = true;
   setGameState();
-  bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
   
   const intervalStats = {};
   const intervalSelectionList = document.querySelectorAll('.interval');
   selectedIntervals = [];
 
   function appendIntervalStats(intervalNode) {
-    intervalStats[intervalNode.id] = {correct: 0, total: 0};
+    intervalActiveState.intervalStats[intervalNode.id] = {correct: 0, total: 0};
     const statsParentContainer = document.getElementById('selected-interval-stats');
     const newPara = document.createElement('p');
     const nodeTextContent = intervalNode.parentNode.textContent.trim();
@@ -133,12 +132,12 @@ startGameBtn.addEventListener('click', () => {
 
   function updateIntervalStats(interval, isCorrect) {
     if (isCorrect) {
-      intervalStats[interval].correct++;
-      intervalStats[interval].total++;
+      intervalActiveState.intervalStats[interval].correct++;
+      intervalActiveState.intervalStats[interval].total++;
     } else if (!isCorrect) {
-      intervalStats[interval].total++;
+      intervalActiveState.intervalStats[interval].total++;
     }
-    console.log(intervalStats);
+    console.log(intervalActiveState.intervalStats);
   }
 
   function appendIntervalButtons() {
@@ -158,7 +157,6 @@ startGameBtn.addEventListener('click', () => {
       } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
         intervalActiveState.currentStreak += 1;
       }
-      bestCorrectStreakDisplay.innerHTML = intervalActiveState.bestCorrectStreak;
     }
 
     function getPercentage(correctNum, totalNum) {
@@ -205,6 +203,10 @@ startGameBtn.addEventListener('click', () => {
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
+
+function appendStatsToPage() {
+  const bestCorrectStreakDisplay = document.getElementById('best-streak');
+}
 
 stopGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = false;
