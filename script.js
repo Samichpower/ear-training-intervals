@@ -113,8 +113,8 @@ startGameBtn.addEventListener('click', () => {
   const scoreTotalDisplay = document.querySelectorAll('.score-total');
   const intervalSelectionList = document.querySelectorAll('.interval');
   intervalActiveState.isGameStarted = true;
-  setGameState();
   selectedIntervals = [];
+  setGameState();
 
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
@@ -134,21 +134,32 @@ startGameBtn.addEventListener('click', () => {
   }
 
   function appendIntervalButtons() {
-    function appendScores() {
-      scoreCorrectDisplay.forEach((score) => {
-        score.innerHTML = intervalActiveState.scoreCorrect;
-      });
-      scoreTotalDisplay.forEach((score) => {
-        score.innerHTML = intervalActiveState.scoreTotal;
-      });
-    }
+    function updateStatistics(correct) {
+      const bestStreakDisplay = document.getElementById('best-streak');
+      function appendScores() {
+        scoreCorrectDisplay.forEach((score) => {
+          score.innerHTML = intervalActiveState.scoreCorrect;
+        });
+        scoreTotalDisplay.forEach((score) => {
+          score.innerHTML = intervalActiveState.scoreTotal;
+        });
+      }
 
-    function appendStreak() {
-      if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
-        intervalActiveState.bestCorrectStreak += 1;
-        intervalActiveState.currentStreak += 1;
-      } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
-        intervalActiveState.currentStreak += 1;
+      function appendStreak() {
+        if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
+          intervalActiveState.bestCorrectStreak += 1;
+          intervalActiveState.currentStreak += 1;
+          bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
+        } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
+          intervalActiveState.currentStreak += 1;
+        }
+      }
+
+      if (correct) {
+        appendScores();
+        appendStreak();
+      } else {
+        appendScores();
       }
     }
     
@@ -166,13 +177,12 @@ startGameBtn.addEventListener('click', () => {
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
-          appendStreak();
-          appendScores();
+          updateStatistics(true)
           updateIntervalStats(intervalActiveState.currentInterval, true);
         } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
           intervalActiveState.scoreTotal += 1;
           intervalActiveState.currentStreak = 0;
-          appendScores();
+          updateStatistics(false);
           updateIntervalStats(intervalActiveState.currentInterval, false);
         } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
           newIntervalBtn.disabled = false;
@@ -193,14 +203,8 @@ startGameBtn.addEventListener('click', () => {
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
 
-function appendStatsToPage() {
-  const newPara = document.createElement('p');
-  // newPara.textContent = 
-}
-
 stopGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = false;
-  appendStatsToPage();
   setGameState();
 });
 
