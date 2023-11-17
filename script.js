@@ -104,29 +104,15 @@ setGameState();
 startGameBtn.addEventListener('click', () => {
   const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
   const scoreTotalDisplay = document.querySelectorAll('.score-total');
-
+  const intervalSelectionList = document.querySelectorAll('.interval');
   intervalActiveState.isGameStarted = true;
   setGameState();
-  
-  const intervalStats = {};
-  const intervalSelectionList = document.querySelectorAll('.interval');
   selectedIntervals = [];
-
-  function appendIntervalStats(intervalNode) {
-    intervalActiveState.intervalStats[intervalNode.id] = {correct: 0, total: 0};
-    const statsParentContainer = document.getElementById('selected-interval-stats');
-    const newPara = document.createElement('p');
-    const nodeTextContent = intervalNode.parentNode.textContent.trim();
-    newPara.innerHTML = `${nodeTextContent}`
-
-
-    statsParentContainer.appendChild(newPara);
-  }
 
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
-      appendIntervalStats(interval);
+      intervalActiveState.intervalStats[interval.id] = {correct: 0, total: 0};
     }
   });
 
