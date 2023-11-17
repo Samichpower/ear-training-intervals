@@ -123,19 +123,10 @@ startGameBtn.addEventListener('click', () => {
     }
   });
 
-  function updateIntervalStats(interval, isCorrect) {
-    if (isCorrect) {
-      intervalActiveState.intervalStats[interval].correct++;
-      intervalActiveState.intervalStats[interval].total++;
-    } else if (!isCorrect) {
-      intervalActiveState.intervalStats[interval].total++;
-    }
-    console.log(intervalActiveState.intervalStats);
-  }
-
   function appendIntervalButtons() {
-    function updateStatistics(correct) {
+    function updateStatistics(interval, isCorrect) {
       const bestStreakDisplay = document.getElementById('best-streak');
+
       function appendScores() {
         scoreCorrectDisplay.forEach((score) => {
           score.innerHTML = intervalActiveState.scoreCorrect;
@@ -144,7 +135,6 @@ startGameBtn.addEventListener('click', () => {
           score.innerHTML = intervalActiveState.scoreTotal;
         });
       }
-
       function appendStreak() {
         if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
           intervalActiveState.bestCorrectStreak += 1;
@@ -154,11 +144,16 @@ startGameBtn.addEventListener('click', () => {
           intervalActiveState.currentStreak += 1;
         }
       }
+      // function appendItemizedStats() {
 
-      if (correct) {
+      // }
+      if (isCorrect) {
+        intervalActiveState.intervalStats[interval].correct++;
+        intervalActiveState.intervalStats[interval].total++;
         appendScores();
         appendStreak();
       } else {
+        intervalActiveState.intervalStats[interval].total++;
         appendScores();
       }
     }
@@ -177,13 +172,11 @@ startGameBtn.addEventListener('click', () => {
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
-          updateStatistics(true)
-          updateIntervalStats(intervalActiveState.currentInterval, true);
+          updateStatistics(intervalActiveState.currentInterval, true)
         } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
           intervalActiveState.scoreTotal += 1;
           intervalActiveState.currentStreak = 0;
-          updateStatistics(false);
-          updateIntervalStats(intervalActiveState.currentInterval, false);
+          updateStatistics(intervalActiveState.currentInterval, false);
         } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
           newIntervalBtn.disabled = false;
         }
