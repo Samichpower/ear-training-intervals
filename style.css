@@ -114,14 +114,23 @@ body {
 #stats-container {
 	margin: 18px;
 	text-align: center;
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+	padding-bottom: 18px;
 }
 
 #stats-container h2 {
 	text-decoration: underline;
+	padding: 18px 0px 10px 0px;
 }
 
 #stats-container .score-container {
 	padding: 8px;
+}
+
+#selected-interval-stats {
+	margin: 10px 0px;
+	text-align: right;
 }
 
 #bottom-content {
