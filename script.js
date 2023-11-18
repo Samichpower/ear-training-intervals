@@ -118,6 +118,13 @@ startGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = true;
   selectedIntervals = [];
   setGameState();
+  
+  function checkIfMaxQuestionsIsMet() {
+    const maxQuestionsToPlay = +maxQuestionsInput.value;
+    if (intervalActiveState.scoreTotal === maxQuestionsToPlay) {
+      return true;
+    }
+  }
 
   function createItemizedIntervalNode(interval) {
     const newSpan = document.createElement('span');
@@ -189,7 +196,7 @@ startGameBtn.addEventListener('click', () => {
           newIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
-          updateStatistics(intervalActiveState.currentInterval, true)
+          updateStatistics(intervalActiveState.currentInterval, true);
         } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
           intervalActiveState.scoreTotal += 1;
           intervalActiveState.currentStreak = 0;
@@ -211,27 +218,30 @@ startGameBtn.addEventListener('click', () => {
   appendIntervalButtons();
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+  
+  function stopGame() {
+    intervalActiveState.isGameStarted = false;
+    setGameState();
+  }
+  stopGameBtn.addEventListener('click', stopGame);
+
+  repeatIntervalBtn.addEventListener('click', () => {
+    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+  });
+  
+  newIntervalBtn.addEventListener('click', () => {
+    if (checkIfMaxQuestionsIsMet()) {
+      stopGame();
+      return;
+    };
+    getNextInterval();
+    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+  });
 });
 
-function stopGame() {
-  intervalActiveState.isGameStarted = false;
-  setGameState();
-}
-
-stopGameBtn.addEventListener('click', stopGame);
-
-repeatIntervalBtn.addEventListener('click', () => {
-  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-});
-
-newIntervalBtn.addEventListener('click', () => {
-  getNextInterval();
-  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-});
 
 
 const statisticsHeader = document.getElementById('statistics-header');
-
 statisticsHeader.addEventListener('click', () => {
   const statisticsContainer = document.getElementById('statistics');
   if (statisticsContainer.style.display === 'none') {
@@ -242,19 +252,19 @@ statisticsHeader.addEventListener('click', () => {
 });
 
 
+const maxQuestionsInput = document.getElementById('num-of-intervals');
 
-const quantityInput = document.getElementById('num-of-intervals');
+maxQuestionsInput.addEventListener('input', () => {
+  function validateNumberInput() {
+    const inputValue = maxQuestionsInput.value;
+    const cleanedValue = inputValue.replace(/[^0-9]/g, '');
+    return cleanedValue;
+  }
+  maxQuestionsInput.value = validateNumberInput();
+});
 
-function getMaxIntervalsToPlay() {
-  return quantityInput.value;
-}
-
-function validateNumberInput() {
-  const inputValue = quantityInput.value;
-  const cleanedValue = inputValue.replace(/[^0-9]/g, '');
-  return cleanedValue;
-}
-
-quantityInput.addEventListener('input', () => {
-  quantityInput.value = validateNumberInput();
-})
+maxQuestionsInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+  }
+});
