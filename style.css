@@ -124,7 +124,7 @@ body {
 	padding: 8px;
 }
 
-#side-content {
+#bottom-content {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
