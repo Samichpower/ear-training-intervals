@@ -99,6 +99,7 @@ function setGameState() {
     percentDisplay.innerHTML = '0';
     intervalActiveState.currentStreak = 0;
     intervalActiveState.bestCorrectStreak = 0;
+    intervalActiveState.itemizedStats = {};
     intervalSelectionList.forEach((item) => {
       item.disabled = true;
     });
