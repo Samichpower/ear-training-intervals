@@ -77,6 +77,7 @@ const stopGameBtn = document.getElementById('stop-btn');
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
 const percentDisplay = document.getElementById('percent');
+const bestStreakDisplay = document.getElementById('best-streak');
 
 function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
@@ -99,6 +100,7 @@ function setGameState() {
     percentDisplay.innerHTML = '0';
     intervalActiveState.currentStreak = 0;
     intervalActiveState.bestCorrectStreak = 0;
+    bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
     intervalActiveState.itemizedStats = {};
     intervalSelectionList.forEach((item) => {
       item.disabled = true;
@@ -118,10 +120,10 @@ startGameBtn.addEventListener('click', () => {
   setGameState();
 
   function createItemizedIntervalNode(interval) {
-    const newPara = document.createElement('p');
     const newSpan = document.createElement('span');
     newSpan.id = interval.id + '-percentage';
     newSpan.textContent = '0%';
+    const newPara = document.createElement('p');
     newPara.textContent = `${interval.parentNode.textContent} :: `;
     newPara.appendChild(newSpan);
     itemizedIntervalContainer.appendChild(newPara);
@@ -138,7 +140,6 @@ startGameBtn.addEventListener('click', () => {
   });
 
   function updateStatistics(interval, isCorrect) {
-    const bestStreakDisplay = document.getElementById('best-streak');
     function appendScores() {
       scoreCorrectDisplay.forEach((score) => {
         score.innerHTML = intervalActiveState.scoreCorrect;
