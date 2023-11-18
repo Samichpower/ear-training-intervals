@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id="main-container">
-    <h1>Intervals</h1>
+  <h1>Intervals</h1>
     <div id="top-content">
       <div class="button-container">
         <button id="new-game-btn">Start</button>
@@ -39,7 +39,7 @@
         <li><label><input type="checkbox" class="interval" id="octave">Octave</label></li>
       </ul>
     </div>
-    <div id="bottom-content">
+    <div id="stats-container">
       <h2 id="statistics-header">Statistics</h2>
       <div id="statistics">
         <p>Total - <span class="score-correct">0</span> of <span class="score-total">0</span> :: <span id="percent">0</span>%</p>
@@ -47,13 +47,13 @@
         <p id="streak-container">Best Streak - <span id="best-streak">0</span></p>
       </div>
     </div>
-  </div>
-  <div id="side-content">
-    <form>
-      <label for="num-of-intervals">Number of Intervals</label>
-      <input type="number" id="num-of-intervals" placeholder="0">
-    </form>
-    <label><input type="checkbox" id="passive-mode">Hands Free</label>
+    <div id="bottom-content">
+      <form>
+        <label for="num-of-intervals">Number of Intervals</label><br>
+        <input type="number" id="num-of-intervals" placeholder="0">
+      </form>
+      <label><input type="checkbox" id="passive-mode">Hands Free</label>
+    </div>
   </div>
   
   <script src="script.js"></script>
