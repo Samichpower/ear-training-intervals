@@ -245,12 +245,10 @@ statisticsHeader.addEventListener('click', () => {
 const quantityInput = document.getElementById('num-of-intervals');
 
 quantityInput.addEventListener('input', () => {
+  function validateNumberInput() {
+    const inputValue = quantityInput.value;
+    const cleanedValue = inputValue.replace(/[^0-9]/g, '');
+    return cleanedValue;
+  }
   quantityInput.value = validateNumberInput();
 })
-
-function validateNumberInput() {
-  const inputValue = quantityInput.value;
-  const cleanedValue = inputValue.replace(/[^0-9]/g, '');
-  console.log(cleanedValue);
-  return cleanedValue;
-}
