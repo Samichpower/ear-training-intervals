@@ -137,44 +137,43 @@ startGameBtn.addEventListener('click', () => {
     }
   });
 
-  function appendIntervalButtons() {
-    function updateStatistics(interval, isCorrect) {
-      const bestStreakDisplay = document.getElementById('best-streak');
-
-      function appendScores() {
-        scoreCorrectDisplay.forEach((score) => {
-          score.innerHTML = intervalActiveState.scoreCorrect;
-        });
-        scoreTotalDisplay.forEach((score) => {
-          score.innerHTML = intervalActiveState.scoreTotal;
-        });
-      }
-      function appendStreak() {
-        if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
-          intervalActiveState.bestCorrectStreak += 1;
-          intervalActiveState.currentStreak += 1;
-          bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
-        } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
-          intervalActiveState.currentStreak += 1;
-        }
-      }
-      function appendItemizedPercentage() {
-        const percentDomRef = document.getElementById(interval + '-percentage');
-        percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
-      }
-      if (isCorrect) {
-        intervalActiveState.itemizedStats[interval].correct++;
-        intervalActiveState.itemizedStats[interval].total++;
-        appendScores();
-        appendStreak();
-        appendItemizedPercentage();
-      } else {
-        intervalActiveState.itemizedStats[interval].total++;
-        appendScores();
-        appendItemizedPercentage();
+  function updateStatistics(interval, isCorrect) {
+    const bestStreakDisplay = document.getElementById('best-streak');
+    function appendScores() {
+      scoreCorrectDisplay.forEach((score) => {
+        score.innerHTML = intervalActiveState.scoreCorrect;
+      });
+      scoreTotalDisplay.forEach((score) => {
+        score.innerHTML = intervalActiveState.scoreTotal;
+      });
+    }
+    function appendStreak() {
+      if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
+        intervalActiveState.bestCorrectStreak += 1;
+        intervalActiveState.currentStreak += 1;
+        bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
+      } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
+        intervalActiveState.currentStreak += 1;
       }
     }
-    
+    function appendItemizedPercentage() {
+      const percentDomRef = document.getElementById(interval + '-percentage');
+      percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
+    }
+    if (isCorrect) {
+      intervalActiveState.itemizedStats[interval].correct++;
+      intervalActiveState.itemizedStats[interval].total++;
+      appendScores();
+      appendStreak();
+      appendItemizedPercentage();
+    } else {
+      intervalActiveState.itemizedStats[interval].total++;
+      appendScores();
+      appendItemizedPercentage();
+    }
+  }
+  
+  function appendIntervalButtons() {
     const intervalAnswerContainer = document.getElementById('interval-buttons');
     intervalAnswerContainer.innerHTML = '';
     for (let i = 0; i < selectedIntervals.length; i++) {
@@ -213,10 +212,12 @@ startGameBtn.addEventListener('click', () => {
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
 
-stopGameBtn.addEventListener('click', () => {
+function stopGame() {
   intervalActiveState.isGameStarted = false;
   setGameState();
-});
+}
+
+stopGameBtn.addEventListener('click', stopGame);
 
 repeatIntervalBtn.addEventListener('click', () => {
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
