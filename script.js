@@ -11,7 +11,7 @@ const intervalActiveState = {
   currentStreak: 0,
   isGameStarted: false,
   isAnswered: false,
-  intervalStats: {},
+  itemizedStats: {},
 }
 
 function getPercentage(correctNum, totalNum) {
@@ -131,7 +131,7 @@ startGameBtn.addEventListener('click', () => {
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
-      intervalActiveState.intervalStats[interval.id] = {correct: 0, total: 0};
+      intervalActiveState.itemizedStats[interval.id] = {correct: 0, total: 0};
       createItemizedIntervalNode(interval);
     }
   });
@@ -159,16 +159,16 @@ startGameBtn.addEventListener('click', () => {
       }
       function appendItemizedPercentage() {
         const percentDomRef = document.getElementById(interval + '-percentage');
-        percentDomRef.textContent = `${getPercentage(intervalActiveState.intervalStats[interval].correct, intervalActiveState.intervalStats[interval].total)}%`
+        percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
       }
       if (isCorrect) {
-        intervalActiveState.intervalStats[interval].correct++;
-        intervalActiveState.intervalStats[interval].total++;
+        intervalActiveState.itemizedStats[interval].correct++;
+        intervalActiveState.itemizedStats[interval].total++;
         appendScores();
         appendStreak();
         appendItemizedPercentage();
       } else {
-        intervalActiveState.intervalStats[interval].total++;
+        intervalActiveState.itemizedStats[interval].total++;
         appendScores();
         appendItemizedPercentage();
       }
