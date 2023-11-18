@@ -130,6 +130,7 @@ body {
 
 #selected-interval-stats {
 	margin: 10px 0px;
+	padding-right: 8px;
 	text-align: right;
 }
 
