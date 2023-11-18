@@ -240,3 +240,17 @@ statisticsHeader.addEventListener('click', () => {
     statisticsContainer.style.display = 'none';
   }
 });
+
+
+const quantityInput = document.getElementById('num-of-intervals');
+
+quantityInput.addEventListener('input', () => {
+  quantityInput.value = validateNumberInput();
+})
+
+function validateNumberInput() {
+  const inputValue = quantityInput.value;
+  const cleanedValue = inputValue.replace(/[^0-9]/g, '');
+  console.log(cleanedValue);
+  return cleanedValue;
+}
