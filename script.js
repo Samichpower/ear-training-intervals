@@ -116,14 +116,23 @@ startGameBtn.addEventListener('click', () => {
   selectedIntervals = [];
   setGameState();
 
+  function createItemizedIntervalNode(interval) {
+    const newPara = document.createElement('p');
+    const newSpan = document.createElement('span');
+    newSpan.id = interval.id + '-percentage';
+    newSpan.textContent = '0%';
+    newPara.textContent = `${interval.parentNode.textContent} :: `;
+    newPara.appendChild(newSpan);
+    itemizedIntervalContainer.appendChild(newPara);
+  }
+
   const itemizedIntervalContainer = document.getElementById('selected-interval-stats');
+  itemizedIntervalContainer.innerHTML = '';
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
       intervalActiveState.intervalStats[interval.id] = {correct: 0, total: 0};
-      const newPara = document.createElement('p');
-      newPara.textContent = `${interval.parentNode.textContent}`;
-      itemizedIntervalContainer.appendChild(newPara);
+      createItemizedIntervalNode(interval);
     }
   });
 
@@ -148,17 +157,20 @@ startGameBtn.addEventListener('click', () => {
           intervalActiveState.currentStreak += 1;
         }
       }
-      function appendItemizedStats() {
-
+      function appendItemizedPercentage() {
+        const percentDomRef = document.getElementById(interval + '-percentage');
+        percentDomRef.textContent = `${getPercentage(intervalActiveState.intervalStats[interval].correct, intervalActiveState.intervalStats[interval].total)}%`
       }
       if (isCorrect) {
         intervalActiveState.intervalStats[interval].correct++;
         intervalActiveState.intervalStats[interval].total++;
         appendScores();
         appendStreak();
+        appendItemizedPercentage();
       } else {
         intervalActiveState.intervalStats[interval].total++;
         appendScores();
+        appendItemizedPercentage();
       }
     }
     
