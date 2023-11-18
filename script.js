@@ -18,7 +18,7 @@ function getPercentage(correctNum, totalNum) {
   return Math.round((correctNum / totalNum) * 100);
 }
 
-function resetAudioPlayback(rootNote, intervalNote) {;
+function resetAudioPlayback(rootNote, intervalNote) {
   if (!rootNote) return;
   rootNote.pause();
   intervalNote.pause();
@@ -242,13 +242,19 @@ statisticsHeader.addEventListener('click', () => {
 });
 
 
+
 const quantityInput = document.getElementById('num-of-intervals');
 
+function getMaxIntervalsToPlay() {
+  return quantityInput.value;
+}
+
+function validateNumberInput() {
+  const inputValue = quantityInput.value;
+  const cleanedValue = inputValue.replace(/[^0-9]/g, '');
+  return cleanedValue;
+}
+
 quantityInput.addEventListener('input', () => {
-  function validateNumberInput() {
-    const inputValue = quantityInput.value;
-    const cleanedValue = inputValue.replace(/[^0-9]/g, '');
-    return cleanedValue;
-  }
   quantityInput.value = validateNumberInput();
 })

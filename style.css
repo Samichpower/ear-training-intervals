@@ -139,4 +139,10 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
+	margin: 18px;
+}
+
+#bottom-content > label {
+	padding: 10px 0px 18px 0px;
+	border-bottom: 1px solid black;
 }
