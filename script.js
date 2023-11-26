@@ -121,13 +121,6 @@ startGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = true;
   selectedIntervals = [];
   setGameState();
-  
-  function checkIfMaxQuestionsIsMet() {
-    const maxQuestionsToPlay = +maxQuestionsInput.value;
-    if (intervalActiveState.scoreTotal === maxQuestionsToPlay) {
-      return true;
-    }
-  }
 
   function createItemizedIntervalNode(interval) {
     const newSpan = document.createElement('span');
@@ -221,27 +214,35 @@ startGameBtn.addEventListener('click', () => {
   appendIntervalButtons();
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-  
-  function stopGame() {
-    intervalActiveState.isGameStarted = false;
-    setGameState();
-  }
-  stopGameBtn.addEventListener('click', stopGame);
-
-  repeatIntervalBtn.addEventListener('click', () => {
-    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-  });
-  
-  newIntervalBtn.addEventListener('click', () => {
-    if (checkIfMaxQuestionsIsMet()) {
-      stopGame();
-      return;
-    };
-    getNextInterval();
-    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-  });
 });
 
+
+
+function checkIfMaxQuestionsIsMet() {
+  const maxQuestionsToPlay = +maxQuestionsInput.value;
+  if (intervalActiveState.scoreTotal === maxQuestionsToPlay) {
+    return true;
+  }
+}
+newIntervalBtn.addEventListener('click', () => {
+  if (checkIfMaxQuestionsIsMet()) {
+    stopGame();
+    return;
+  };
+  console.log('test');
+  getNextInterval();
+  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+});
+
+function stopGame() {
+  intervalActiveState.isGameStarted = false;
+  setGameState();
+}
+stopGameBtn.addEventListener('click', stopGame);
+
+repeatIntervalBtn.addEventListener('click', () => {
+  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+});
 
 
 const statisticsHeader = document.getElementById('statistics-header');
