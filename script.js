@@ -27,11 +27,14 @@ function resetAudioPlayback(rootNote, intervalNote) {
   rootNote.volume = 1;
 }
 
+let intervalNoteTimeout;
+
 function playNotes(noteTiming, rootNote, intervalNote) {
   resetAudioPlayback(rootNote, intervalNote);
   if (!rootNote) return;
   rootNote.play();
-  setTimeout(() => {
+  clearTimeout(intervalNoteTimeout);
+  intervalNoteTimeout = setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
   }, noteTiming);
