@@ -33,7 +33,7 @@ function playNotes(noteTiming, rootNote, intervalNote) {
   resetAudioPlayback(rootNote, intervalNote);
   if (!rootNote) return;
   rootNote.play();
-  clearTimeout(intervalNoteTimeout);
+  clearTimeout(intervalNoteTimeout); //Without this, we get the random double-note bug on stopping then starting a new.
   intervalNoteTimeout = setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
@@ -136,11 +136,11 @@ startGameBtn.addEventListener('click', () => {
     const newPara = document.createElement('p');
     newPara.textContent = `${interval.parentNode.textContent} :: `;
     newPara.appendChild(newSpan);
-    itemizedIntervalContainer.appendChild(newPara);
+    itemizedIntervalStatsContainer.appendChild(newPara);
   }
 
-  const itemizedIntervalContainer = document.getElementById('selected-interval-stats');
-  itemizedIntervalContainer.innerHTML = '';
+  const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
+  itemizedIntervalStatsContainer.innerHTML = '';
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
