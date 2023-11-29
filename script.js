@@ -27,13 +27,11 @@ function resetAudioPlayback(rootNote, intervalNote) {
   rootNote.volume = 1;
 }
 
-let intervalNoteTimeout;
-
 function playNotes(noteTiming, rootNote, intervalNote) {
   resetAudioPlayback(rootNote, intervalNote);
   if (!rootNote) return;
   rootNote.play();
-  intervalNoteTimeout = setTimeout(() => {
+  setTimeout(() => {
     rootNote.volume = 0.5;
     intervalNote.play();
   }, noteTiming);
@@ -66,7 +64,7 @@ function getNextInterval() {
     }
   }
 
-  newIntervalBtn.disabled = true;
+  nextIntervalBtn.disabled = true;
   const rootNoteIndex = Math.floor(Math.random() * (allNoteNames.length - 12));
   const intervalNoteIndex = getIntervalNoteIndex();
   intervalActiveState.rootNote = getAudioFromIndex(rootNoteIndex);
@@ -77,7 +75,7 @@ function getNextInterval() {
 const startGameBtn = document.getElementById('new-game-btn');
 const stopGameBtn = document.getElementById('stop-btn');
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
-const newIntervalBtn = document.getElementById('hear-new-btn');
+const nextIntervalBtn = document.getElementById('hear-new-btn');
 const percentDisplay = document.getElementById('percent');
 const bestStreakDisplay = document.getElementById('best-streak');
 const maxQuestionsInput = document.getElementById('num-of-intervals');
@@ -120,12 +118,13 @@ function setGameState() {
 setGameState();
 
 startGameBtn.addEventListener('click', () => {
-  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
-  const scoreTotalDisplay = document.querySelectorAll('.score-total');
-  const intervalSelectionList = document.querySelectorAll('.interval');
   intervalActiveState.isGameStarted = true;
-  selectedIntervals = [];
   setGameState();
+  const intervalSelectionList = document.querySelectorAll('.interval');
+  selectedIntervals = [];
+
+  const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
+  itemizedIntervalStatsContainer.innerHTML = '';
 
   function createItemizedIntervalNode(interval) {
     const newSpan = document.createElement('span');
@@ -137,8 +136,6 @@ startGameBtn.addEventListener('click', () => {
     itemizedIntervalStatsContainer.appendChild(newPara);
   }
 
-  const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
-  itemizedIntervalStatsContainer.innerHTML = '';
   intervalSelectionList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
@@ -146,6 +143,11 @@ startGameBtn.addEventListener('click', () => {
       createItemizedIntervalNode(interval);
     }
   });
+  
+  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
+  const scoreTotalDisplay = document.querySelectorAll('.score-total');
+  scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
+  scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
 
   function updateStatistics(interval, isCorrect) {
     function appendScores() {
@@ -182,7 +184,7 @@ startGameBtn.addEventListener('click', () => {
     }
   }
   
-  function appendIntervalButtons() {
+  function createIntervalButtons() {
     const intervalAnswerContainer = document.getElementById('interval-buttons');
     intervalAnswerContainer.innerHTML = '';
     for (let i = 0; i < selectedIntervals.length; i++) {
@@ -194,7 +196,7 @@ startGameBtn.addEventListener('click', () => {
 
       intervalButton.addEventListener('click', (btn) => {
         if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //Correct Answer
-          newIntervalBtn.disabled = false;
+          nextIntervalBtn.disabled = false;
           intervalActiveState.scoreCorrect += 1;
           intervalActiveState.scoreTotal += 1;
           updateStatistics(intervalActiveState.currentInterval, true);
@@ -203,7 +205,7 @@ startGameBtn.addEventListener('click', () => {
           intervalActiveState.currentStreak = 0;
           updateStatistics(intervalActiveState.currentInterval, false);
         } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
-          newIntervalBtn.disabled = false;
+          nextIntervalBtn.disabled = false;
         }
         btn.target.disabled = true;
         intervalActiveState.isAnswered = true;
@@ -214,9 +216,7 @@ startGameBtn.addEventListener('click', () => {
   
   intervalActiveState.scoreCorrect = 0;
   intervalActiveState.scoreTotal = 0;
-  scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
-  scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
-  appendIntervalButtons();
+  createIntervalButtons();
   getNextInterval();
   playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
 });
@@ -229,7 +229,7 @@ function checkIfMaxQuestionsIsMet() {
     return true;
   }
 }
-newIntervalBtn.addEventListener('click', () => {
+nextIntervalBtn.addEventListener('click', () => {
   if (checkIfMaxQuestionsIsMet()) {
     stopGame();
     return;
