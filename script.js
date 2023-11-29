@@ -80,6 +80,8 @@ const repeatIntervalBtn = document.getElementById('hear-again-btn');
 const newIntervalBtn = document.getElementById('hear-new-btn');
 const percentDisplay = document.getElementById('percent');
 const bestStreakDisplay = document.getElementById('best-streak');
+const maxQuestionsInput = document.getElementById('num-of-intervals');
+const handsFreeCheckbox = document.getElementById('hands-free');
 
 function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
@@ -95,6 +97,8 @@ function setGameState() {
       item.disabled = false;
     });
     statsContainer.style.display = 'block';
+    maxQuestionsInput.disabled = false;
+    handsFreeCheckbox.disabled = false;
   } else if (intervalActiveState.isGameStarted) { //Game is started
     hearButtons.style.display = '';
     startGameBtn.disabled = true;
@@ -108,6 +112,8 @@ function setGameState() {
       item.disabled = true;
     });
     statsContainer.style.display = 'none';
+    maxQuestionsInput.disabled = true;
+    handsFreeCheckbox.disabled = true;
   }
 }
 
@@ -252,9 +258,6 @@ statisticsHeader.addEventListener('click', () => {
     statisticsContainer.style.display = 'none';
   }
 });
-
-
-const maxQuestionsInput = document.getElementById('num-of-intervals');
 
 maxQuestionsInput.addEventListener('input', () => {
   function validateNumberInput() {
