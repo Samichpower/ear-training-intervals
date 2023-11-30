@@ -118,11 +118,16 @@ function setGameState() {
 
 setGameState();
 
+let handsFreeSetInterval;
+
 function doHandsFreeMode() {
-  setInterval(() => {
+  handsFreeSetInterval = setInterval(() => {
     getNextInterval();
     playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
   }, 2000);
+  if (checkIfMaxQuestionsIsMet()) {
+    clearInterval(handsFreeSetInterval);
+  }
 }
 
 function doGameSetup(isHandsFreeChecked) {
@@ -157,84 +162,91 @@ function doGameSetup(isHandsFreeChecked) {
 
 startGameBtn.addEventListener('click', () => {
   const isHandsFreeChecked = document.getElementById('hands-free').checked;
-
   doGameSetup(isHandsFreeChecked);
 
-  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
-  const scoreTotalDisplay = document.querySelectorAll('.score-total');
-  scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
-  scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
-
-  function updateStatistics(interval, isCorrect) {
-    function appendScores() {
-      scoreCorrectDisplay.forEach((score) => {
-        score.innerHTML = intervalActiveState.scoreCorrect;
-      });
-      scoreTotalDisplay.forEach((score) => {
-        score.innerHTML = intervalActiveState.scoreTotal;
-      });
-    }
-    function appendStreak() {
-      if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
-        intervalActiveState.bestCorrectStreak += 1;
-        intervalActiveState.currentStreak += 1;
-        bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
-      } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
-        intervalActiveState.currentStreak += 1;
+  function doStandardMode() {
+    const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
+    const scoreTotalDisplay = document.querySelectorAll('.score-total');
+    scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
+    scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
+  
+    function updateStatistics(interval, isCorrect) {
+      function appendScores() {
+        scoreCorrectDisplay.forEach((score) => {
+          score.innerHTML = intervalActiveState.scoreCorrect;
+        });
+        scoreTotalDisplay.forEach((score) => {
+          score.innerHTML = intervalActiveState.scoreTotal;
+        });
+      }
+      function appendStreak() {
+        if (intervalActiveState.currentStreak === intervalActiveState.bestCorrectStreak) {
+          intervalActiveState.bestCorrectStreak += 1;
+          intervalActiveState.currentStreak += 1;
+          bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
+        } else if (intervalActiveState.currentStreak < intervalActiveState.bestCorrectStreak) {
+          intervalActiveState.currentStreak += 1;
+        }
+      }
+      function appendItemizedPercentage() {
+        const percentDomRef = document.getElementById(interval + '-percentage');
+        percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
+      }
+      if (isCorrect) {
+        intervalActiveState.itemizedStats[interval].correct++;
+        intervalActiveState.itemizedStats[interval].total++;
+        appendScores();
+        appendStreak();
+        appendItemizedPercentage();
+      } else {
+        intervalActiveState.itemizedStats[interval].total++;
+        appendScores();
+        appendItemizedPercentage();
       }
     }
-    function appendItemizedPercentage() {
-      const percentDomRef = document.getElementById(interval + '-percentage');
-      percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
-    }
-    if (isCorrect && !isHandsFreeChecked) {
-      intervalActiveState.itemizedStats[interval].correct++;
-      intervalActiveState.itemizedStats[interval].total++;
-      appendScores();
-      appendStreak();
-      appendItemizedPercentage();
-    } else if (!isHandsFreeChecked) {
-      intervalActiveState.itemizedStats[interval].total++;
-      appendScores();
-      appendItemizedPercentage();
-    }
-  }
+    
+    function createIntervalButtons() {
+      const intervalAnswerContainer = document.getElementById('interval-buttons');
+      intervalAnswerContainer.innerHTML = '';
+      for (let i = 0; i < selectedIntervals.length; i++) {
+        const intervalButton = document.createElement('button');
+        intervalButton.className = 'interval-button';
+        intervalButton.id = selectedIntervals[i];
+        intervalButton.textContent = selectedIntervals[i];
+        intervalAnswerContainer.appendChild(intervalButton);
   
-  function createIntervalButtons() {
-    const intervalAnswerContainer = document.getElementById('interval-buttons');
-    intervalAnswerContainer.innerHTML = '';
-    for (let i = 0; i < selectedIntervals.length; i++) {
-      const intervalButton = document.createElement('button');
-      intervalButton.className = 'interval-button';
-      intervalButton.id = selectedIntervals[i];
-      intervalButton.textContent = selectedIntervals[i];
-      intervalAnswerContainer.appendChild(intervalButton);
+        intervalButton.addEventListener('click', (btn) => {
+          if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //Correct Answer
+            nextIntervalBtn.disabled = false;
+            intervalActiveState.scoreCorrect += 1;
+            intervalActiveState.scoreTotal += 1;
+            updateStatistics(intervalActiveState.currentInterval, true);
+          } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
+            intervalActiveState.scoreTotal += 1;
+            intervalActiveState.currentStreak = 0;
+            updateStatistics(intervalActiveState.currentInterval, false);
+          } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
+            nextIntervalBtn.disabled = false;
+          }
+          btn.target.disabled = true;
+          intervalActiveState.isAnswered = true;
+          percentDisplay.innerHTML = getPercentage(intervalActiveState.scoreCorrect, intervalActiveState.scoreTotal);
+        })
+      }
+    }
+    
+    intervalActiveState.scoreCorrect = 0;
+    intervalActiveState.scoreTotal = 0;
+    createIntervalButtons();
+    getNextInterval();
+    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+  }
 
-      intervalButton.addEventListener('click', (btn) => {
-        if (btn.target.id === intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //Correct Answer
-          nextIntervalBtn.disabled = false;
-          intervalActiveState.scoreCorrect += 1;
-          intervalActiveState.scoreTotal += 1;
-          updateStatistics(intervalActiveState.currentInterval, true);
-        } else if (btn.target.id !== intervalActiveState.currentInterval && !intervalActiveState.isAnswered) { //First time incorrect
-          intervalActiveState.scoreTotal += 1;
-          intervalActiveState.currentStreak = 0;
-          updateStatistics(intervalActiveState.currentInterval, false);
-        } else if (btn.target.id === intervalActiveState.currentInterval) { //Following incorrect
-          nextIntervalBtn.disabled = false;
-        }
-        btn.target.disabled = true;
-        intervalActiveState.isAnswered = true;
-        percentDisplay.innerHTML = getPercentage(intervalActiveState.scoreCorrect, intervalActiveState.scoreTotal);
-      })
-    }
-  }
-  
-  intervalActiveState.scoreCorrect = 0;
-  intervalActiveState.scoreTotal = 0;
-  createIntervalButtons();
-  getNextInterval();
-  playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+  if (isHandsFreeChecked) {
+    doHandsFreeMode();
+  } else if (!isHandsFreeChecked) {
+    doStandardMode();
+  };
 });
 
 
