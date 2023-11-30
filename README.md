@@ -19,3 +19,11 @@ Function containing a single round of the game, repeating after the specified in
 
 else if hands free mode is unchecked
 function doGame, normal game.
+
+
+THIS IS WHAT THE setInterval DOES:
+Get interval
+Play interval
+Wait 1-2 seconds
+Play audio of the answer
+Repeat specified amount
