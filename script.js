@@ -92,7 +92,7 @@ function setGameState() {
     startGameBtn.disabled = false;
     stopGameBtn.disabled = true;
     intervalButtonContainer.innerHTML = '';
-    intervalSelectionList.forEach((item) => {
+    chosenIntervalsList.forEach((item) => {
       item.disabled = false;
     });
     statsContainer.style.display = 'block';
@@ -107,7 +107,7 @@ function setGameState() {
     intervalActiveState.bestCorrectStreak = 0;
     bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
     intervalActiveState.itemizedStats = {};
-    intervalSelectionList.forEach((item) => {
+    chosenIntervalsList.forEach((item) => {
       item.disabled = true;
     });
     statsContainer.style.display = 'none';
