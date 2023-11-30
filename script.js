@@ -85,14 +85,14 @@ const handsFreeCheckbox = document.getElementById('hands-free');
 function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
   const intervalButtonContainer = document.getElementById('interval-buttons');
-  const chosenIntervalsList = document.querySelectorAll('.interval');
+  const allIntervalCheckboxes = document.querySelectorAll('.interval');
   const statsContainer = document.getElementById('statistics');
   if (!intervalActiveState.isGameStarted) { //Game is not started
     hearButtons.style.display = 'none';
     startGameBtn.disabled = false;
     stopGameBtn.disabled = true;
     intervalButtonContainer.innerHTML = '';
-    chosenIntervalsList.forEach((item) => {
+    allIntervalCheckboxes.forEach((item) => {
       item.disabled = false;
     });
     statsContainer.style.display = 'block';
@@ -107,7 +107,7 @@ function setGameState() {
     intervalActiveState.bestCorrectStreak = 0;
     bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
     intervalActiveState.itemizedStats = {};
-    chosenIntervalsList.forEach((item) => {
+    allIntervalCheckboxes.forEach((item) => {
       item.disabled = true;
     });
     statsContainer.style.display = 'none';
@@ -128,7 +128,7 @@ function doHandsFreeMode() {
 startGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = true;
   setGameState();
-  const intervalSelectionList = document.querySelectorAll('.interval');
+  const allIntervalCheckboxes = document.querySelectorAll('.interval');
   selectedIntervals = [];
 
   const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
@@ -144,7 +144,7 @@ startGameBtn.addEventListener('click', () => {
     itemizedIntervalStatsContainer.appendChild(newPara);
   }
 
-  intervalSelectionList.forEach((interval) => {
+  allIntervalCheckboxes.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
       intervalActiveState.itemizedStats[interval.id] = {correct: 0, total: 0};
