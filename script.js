@@ -72,6 +72,7 @@ function getNextInterval() {
 }
 
 
+
 const startGameBtn = document.getElementById('new-game-btn');
 const stopGameBtn = document.getElementById('stop-btn');
 const repeatIntervalBtn = document.getElementById('hear-again-btn');
@@ -84,7 +85,7 @@ const handsFreeCheckbox = document.getElementById('hands-free');
 function setGameState() {
   const hearButtons = document.getElementById('hear-buttons');
   const intervalButtonContainer = document.getElementById('interval-buttons');
-  const intervalSelectionList = document.querySelectorAll('.interval');
+  const chosenIntervalsList = document.querySelectorAll('.interval');
   const statsContainer = document.getElementById('statistics');
   if (!intervalActiveState.isGameStarted) { //Game is not started
     hearButtons.style.display = 'none';
@@ -116,6 +117,13 @@ function setGameState() {
 }
 
 setGameState();
+
+function doHandsFreeMode() {
+  setInterval(() => {
+    getNextInterval();
+    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+  }, 2000);
+}
 
 startGameBtn.addEventListener('click', () => {
   intervalActiveState.isGameStarted = true;
@@ -229,6 +237,7 @@ function checkIfMaxQuestionsIsMet() {
     return true;
   }
 }
+
 nextIntervalBtn.addEventListener('click', () => {
   if (checkIfMaxQuestionsIsMet()) {
     stopGame();
