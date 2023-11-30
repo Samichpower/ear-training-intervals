@@ -125,15 +125,13 @@ function doHandsFreeMode() {
   }, 2000);
 }
 
-startGameBtn.addEventListener('click', () => {
+function doGameSetup(isHandsFreeChecked) {
   intervalActiveState.isGameStarted = true;
   setGameState();
-  const allIntervalCheckboxes = document.querySelectorAll('.interval');
-  selectedIntervals = [];
-
+  
   const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
   itemizedIntervalStatsContainer.innerHTML = '';
-
+  
   function createItemizedIntervalNode(interval) {
     const newSpan = document.createElement('span');
     newSpan.id = interval.id + '-percentage';
@@ -143,15 +141,25 @@ startGameBtn.addEventListener('click', () => {
     newPara.appendChild(newSpan);
     itemizedIntervalStatsContainer.appendChild(newPara);
   }
-
+  
+  const allIntervalCheckboxes = document.querySelectorAll('.interval');
+  selectedIntervals = [];
   allIntervalCheckboxes.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
+    }
+    if (interval.checked && !isHandsFreeChecked) {
       intervalActiveState.itemizedStats[interval.id] = {correct: 0, total: 0};
       createItemizedIntervalNode(interval);
     }
   });
-  
+}
+
+startGameBtn.addEventListener('click', () => {
+  const isHandsFreeChecked = document.getElementById('hands-free').checked;
+
+  doGameSetup(isHandsFreeChecked);
+
   const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
   const scoreTotalDisplay = document.querySelectorAll('.score-total');
   scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
@@ -179,13 +187,13 @@ startGameBtn.addEventListener('click', () => {
       const percentDomRef = document.getElementById(interval + '-percentage');
       percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
     }
-    if (isCorrect) {
+    if (isCorrect && !isHandsFreeChecked) {
       intervalActiveState.itemizedStats[interval].correct++;
       intervalActiveState.itemizedStats[interval].total++;
       appendScores();
       appendStreak();
       appendItemizedPercentage();
-    } else {
+    } else if (!isHandsFreeChecked) {
       intervalActiveState.itemizedStats[interval].total++;
       appendScores();
       appendItemizedPercentage();
