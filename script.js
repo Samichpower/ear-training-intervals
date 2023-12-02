@@ -182,13 +182,16 @@ function doGameSetup(isHandsFreeChecked) {
 startGameBtn.addEventListener('click', () => {
   const isHandsFreeChecked = document.getElementById('hands-free').checked;
   doGameSetup(isHandsFreeChecked);
-
-  function doStandardMode() {
-    const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
-    const scoreTotalDisplay = document.querySelectorAll('.score-total');
+  
+  const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
+  const scoreTotalDisplay = document.querySelectorAll('.score-total');
+  function resetScoreDisplay() {
     scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
     scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
-  
+  }
+  resetScoreDisplay();
+
+  function doStandardMode() {
     function updateStatistics(interval, isCorrect) {
       function appendScores() {
         scoreCorrectDisplay.forEach((score) => {
