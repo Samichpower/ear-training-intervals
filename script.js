@@ -124,31 +124,6 @@ function setGameState(isHandsFreeChecked) {
 
 setGameState();
 
-let handsFreeSetInterval;
-
-function doHandsFreeMode() {
-  function playHandsFreeInterval() {
-    intervalActiveState.scoreTotal++;
-    if (checkIfMaxQuestionsIsMet()) {
-      clearInterval(handsFreeSetInterval);
-      setTimeout(() => {
-        stopGame();
-      }, 4500);
-    };
-    getNextInterval();
-    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
-    setTimeout(() => {
-      const textToSpeechInterval = new Audio('audio/tts-audio/' + intervalActiveState.currentInterval + '.mp3');
-      textToSpeechInterval.play();
-    }, 3000);
-  }
-
-  playHandsFreeInterval();
-  handsFreeSetInterval = setInterval(() => {
-    playHandsFreeInterval();
-  }, 4500);
-}
-
 function doGameSetup(isHandsFreeChecked) {
   intervalActiveState.isGameStarted = true;
   setGameState(isHandsFreeChecked);
@@ -177,6 +152,32 @@ function doGameSetup(isHandsFreeChecked) {
       createItemizedIntervalNode(interval);
     }
   });
+}
+
+let handsFreeSetInterval;
+
+function doHandsFreeMode() {
+  function playHandsFreeInterval() {
+    intervalActiveState.scoreTotal++;
+    if (checkIfMaxQuestionsIsMet()) {
+      clearInterval(handsFreeSetInterval);
+      setTimeout(() => {
+        stopGame();
+      }, 4500);
+    };
+
+    getNextInterval();
+    playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+    setTimeout(() => {
+      const textToSpeechInterval = new Audio('audio/tts-audio/' + intervalActiveState.currentInterval + '.mp3');
+      textToSpeechInterval.play();
+    }, 3000);
+  }
+
+  playHandsFreeInterval();
+  handsFreeSetInterval = setInterval(() => {
+    playHandsFreeInterval();
+  }, 4500);
 }
 
 startGameBtn.addEventListener('click', () => {
