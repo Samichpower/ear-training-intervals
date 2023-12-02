@@ -131,7 +131,9 @@ function doHandsFreeMode() {
     intervalActiveState.scoreTotal++;
     if (checkIfMaxQuestionsIsMet()) {
       clearInterval(handsFreeSetInterval);
-      stopGame();
+      setTimeout(() => {
+        stopGame();
+      }, 4500);
     };
     getNextInterval();
     playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
