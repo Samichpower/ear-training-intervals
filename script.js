@@ -142,7 +142,7 @@ function doHandsFreeMode() {
   playHandsFreeNote();
   handsFreeSetInterval = setInterval(() => {
     playHandsFreeNote();
-  }, 5000);
+  }, 4500);
 }
 
 function doGameSetup(isHandsFreeChecked) {
@@ -268,7 +268,7 @@ startGameBtn.addEventListener('click', () => {
 
 function checkIfMaxQuestionsIsMet() {
   const maxQuestionsToPlay = +maxQuestionsInput.value;
-  if (intervalActiveState.scoreTotal === maxQuestionsToPlay) {
+  if (intervalActiveState.scoreTotal >= maxQuestionsToPlay) {
     return true;
   }
 }
