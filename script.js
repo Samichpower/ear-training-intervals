@@ -125,7 +125,7 @@ setGameState();
 let handsFreeSetInterval;
 
 function doHandsFreeMode() {
-  function playHandsFreeNote() {
+  function playHandsFreeInterval() {
     intervalActiveState.scoreTotal++;
     if (checkIfMaxQuestionsIsMet()) {
       clearInterval(handsFreeSetInterval);
@@ -139,9 +139,9 @@ function doHandsFreeMode() {
     }, 3000);
   }
 
-  playHandsFreeNote();
+  playHandsFreeInterval();
   handsFreeSetInterval = setInterval(() => {
-    playHandsFreeNote();
+    playHandsFreeInterval();
   }, 4500);
 }
 
