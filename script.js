@@ -134,8 +134,8 @@ function doHandsFreeMode() {
     getNextInterval();
     playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
     setTimeout(() => {
-      const textToSpeech = new Audio('audio/tts-audio/' + intervalActiveState.currentInterval + '.mp3');
-      textToSpeech.play();
+      const textToSpeechInterval = new Audio('audio/tts-audio/' + intervalActiveState.currentInterval + '.mp3');
+      textToSpeechInterval.play();
     }, 3000);
   }
 
