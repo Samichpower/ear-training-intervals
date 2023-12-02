@@ -133,11 +133,16 @@ function doHandsFreeMode() {
     };
     getNextInterval();
     playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
+    setTimeout(() => {
+      const textToSpeech = new Audio('audio/tts-audio/' + intervalActiveState.currentInterval + '.mp3');
+      textToSpeech.play();
+    }, 3000);
   }
+
   playHandsFreeNote();
   handsFreeSetInterval = setInterval(() => {
     playHandsFreeNote();
-  }, 2000);
+  }, 5000);
 }
 
 function doGameSetup(isHandsFreeChecked) {
