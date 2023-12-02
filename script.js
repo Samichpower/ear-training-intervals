@@ -82,7 +82,7 @@ const bestStreakDisplay = document.getElementById('best-streak');
 const maxQuestionsInput = document.getElementById('num-of-intervals');
 const handsFreeCheckbox = document.getElementById('hands-free');
 
-function setGameState() {
+function setGameState(isHandsFreeChecked) {
   const hearButtons = document.getElementById('hear-buttons');
   const intervalButtonContainer = document.getElementById('interval-buttons');
   const allIntervalCheckboxes = document.querySelectorAll('.interval');
@@ -99,7 +99,11 @@ function setGameState() {
     maxQuestionsInput.disabled = false;
     handsFreeCheckbox.disabled = false;
   } else if (intervalActiveState.isGameStarted) { //Game is started
-    hearButtons.style.display = '';
+    if (isHandsFreeChecked) {
+      hearButtons.style.display = 'none';
+    } else {
+      hearButtons.style.display = '';
+    }
     startGameBtn.disabled = true;
     stopGameBtn.disabled = false;
     percentDisplay.innerHTML = '0';
@@ -133,7 +137,7 @@ function doHandsFreeMode() {
 
 function doGameSetup(isHandsFreeChecked) {
   intervalActiveState.isGameStarted = true;
-  setGameState();
+  setGameState(isHandsFreeChecked);
   
   const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
   itemizedIntervalStatsContainer.innerHTML = '';
