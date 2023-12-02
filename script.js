@@ -88,7 +88,6 @@ function setGameState(isHandsFreeChecked) {
   const allIntervalCheckboxes = document.querySelectorAll('.interval');
   const statsContainer = document.getElementById('statistics');
   if (!intervalActiveState.isGameStarted) { //Game is not started
-    console.log('test');
     hearButtons.style.display = 'none';
     startGameBtn.disabled = false;
     stopGameBtn.disabled = true;
@@ -100,7 +99,6 @@ function setGameState(isHandsFreeChecked) {
     maxQuestionsInput.disabled = false;
     handsFreeCheckbox.disabled = false;
   } else if (intervalActiveState.isGameStarted) { //Game is started
-    intervalActiveState.scoreTotal = 0;
     if (isHandsFreeChecked) {
       hearButtons.style.display = 'none';
     } else {
@@ -109,8 +107,10 @@ function setGameState(isHandsFreeChecked) {
     startGameBtn.disabled = true;
     stopGameBtn.disabled = false;
     percentDisplay.innerHTML = '0';
-    intervalActiveState.currentStreak = 0;
+    intervalActiveState.scoreCorrect = 0;
+    intervalActiveState.scoreTotal = 0;
     intervalActiveState.bestCorrectStreak = 0;
+    intervalActiveState.currentStreak = 0;
     bestStreakDisplay.textContent = intervalActiveState.bestCorrectStreak;
     intervalActiveState.itemizedStats = {};
     allIntervalCheckboxes.forEach((item) => {
@@ -251,9 +251,6 @@ startGameBtn.addEventListener('click', () => {
         })
       }
     }
-    
-    intervalActiveState.scoreCorrect = 0;
-    intervalActiveState.scoreTotal = 0;
     createIntervalButtons();
     getNextInterval();
     playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
@@ -265,8 +262,6 @@ startGameBtn.addEventListener('click', () => {
     doStandardMode();
   };
 });
-
-
 
 function checkIfMaxQuestionsIsMet() {
   const maxQuestionsToPlay = +maxQuestionsInput.value;
@@ -289,6 +284,7 @@ function stopGame() {
   clearInterval(handsFreeSetInterval);
   setGameState();
 }
+
 stopGameBtn.addEventListener('click', stopGame);
 
 repeatIntervalBtn.addEventListener('click', () => {
