@@ -88,6 +88,7 @@ function setGameState(isHandsFreeChecked) {
   const allIntervalCheckboxes = document.querySelectorAll('.interval');
   const statsContainer = document.getElementById('statistics');
   if (!intervalActiveState.isGameStarted) { //Game is not started
+    console.log('test');
     hearButtons.style.display = 'none';
     startGameBtn.disabled = false;
     stopGameBtn.disabled = true;
@@ -99,6 +100,7 @@ function setGameState(isHandsFreeChecked) {
     maxQuestionsInput.disabled = false;
     handsFreeCheckbox.disabled = false;
   } else if (intervalActiveState.isGameStarted) { //Game is started
+    intervalActiveState.scoreTotal = 0;
     if (isHandsFreeChecked) {
       hearButtons.style.display = 'none';
     } else {
