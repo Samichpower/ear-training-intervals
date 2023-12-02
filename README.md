@@ -8,22 +8,4 @@ GOALS FOR THIS PROJECT:
 
 BUGS
 -Breaks with no intervals selected
-
-
-
-
-NOTES ON HANDS FREE
-On start game click, if hands free mode is checked
-Function doHandsFree
-Function containing a single round of the game, repeating after the specified interval time. 
-
-else if hands free mode is unchecked
-function doGame, normal game.
-
-
-THIS IS WHAT THE setInterval DOES:
-Get interval
-Play interval
-Wait 1-2 seconds
-Play audio of the answer
-Repeat specified amount
+-Doesn't clear stats on starting hands free mode
