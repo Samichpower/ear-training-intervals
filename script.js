@@ -279,9 +279,11 @@ startGameBtn.addEventListener('click', () => {
 
 function checkIfMaxQuestionsIsMet() {
   const maxQuestionsToPlay = +maxQuestionsInput.value;
-  if (intervalActiveState.scoreTotal >= maxQuestionsToPlay) {
+  if (maxQuestionsToPlay === 0) {
+    return;
+  } else if (intervalActiveState.scoreTotal >= maxQuestionsToPlay) {
     return true;
-  }
+  };
 }
 
 nextIntervalBtn.addEventListener('click', () => {
