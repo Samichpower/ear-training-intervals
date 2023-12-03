@@ -42,49 +42,47 @@ table {
 }
 
 
-/* COLOR PALETTE
-##332F2E - DARK
-#61504E - LIGHTER DARK
-#946159 - MID
-#C75F50 - LIGHT RED
-#FA4D31 - RED
-*/
+
+
 
 html {
 	font-size: 16px;
-	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+	font-family: 'Poppins', sans-serif;
 }
 
 h1 {
 	font-size: 3rem;
 	text-align: center;
+	margin-bottom: 24px;
+	font-weight: 500;
 }
 
 body {
-	background-color: #111111;
+	background-color: #FCF5ED;
 	display: flex;
 	justify-content: center;
 	font-size: 1.25rem;
 }
 
 #main-container {
-	background-color: #cf7566;
+	background-color: #FCF5ED;
 	margin-top: 24px;
 	width: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #top-content {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 5px;
 	font-size: 0;
 }
 
 #top-content p {
-	font-size: 1.25rem;
-	text-decoration: underline;
-	padding: 8px;
+	font-size: 2rem;
+	padding: 20px;
 }
 
 .button-container button {
@@ -104,14 +102,27 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	border-top: 1px solid black;
+	padding-top: 18px;
+	margin: 0px 18px;
+	width: 300px;
+}
+
+.header-style {
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+#interval-selection-list h2 {
+	margin-bottom: 10px;
 }
 
 #interval-selection-list ul {
-	border: 2px solid #111111;
-	padding: 0px 15px;
+	background-color: #FCF5ED;
 }
 
 #stats-container {
+	width: 300px;
 	margin: 18px;
 	text-align: center;
 	border-bottom: 1px solid black;
@@ -120,12 +131,11 @@ body {
 }
 
 #stats-container h2 {
-	text-decoration: underline;
 	padding: 18px 0px 10px 0px;
 }
 
-#stats-container .score-container {
-	padding: 8px;
+#stats-container h2:hover {
+	text-decoration: underline;
 }
 
 #selected-interval-stats {
@@ -140,6 +150,7 @@ body {
 	justify-content: center;
 	text-align: center;
 	margin: 18px;
+	width: 300px;
 }
 
 #bottom-content > label {
