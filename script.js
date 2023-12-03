@@ -152,10 +152,6 @@ function doGameSetup(isHandsFreeChecked) {
       createItemizedIntervalNode(interval);
     }
   });
-
-  //This stops the gamestate from being set if no interval is selected. However, it breaks itemized stats for some reason. Move the two lines to the top of the function to fix it.
-  // if (selectedIntervals.length > 0) {
-  // }
 }
 
 let handsFreeSetInterval;
@@ -169,7 +165,6 @@ function doHandsFreeMode() {
         stopGame();
       }, 4500);
     };
-
     getNextInterval();
     playNotes(750, intervalActiveState.rootNote, intervalActiveState.intervalNote);
     setTimeout(() => {
@@ -177,7 +172,6 @@ function doHandsFreeMode() {
       textToSpeechInterval.play();
     }, 3000);
   }
-
   playHandsFreeInterval();
   handsFreeSetInterval = setInterval(() => {
     playHandsFreeInterval();
@@ -196,17 +190,14 @@ startGameBtn.addEventListener('click', () => {
     return intervals;
   }
   if (getSelectedIntervals().length === 0) return;
-  
+
   const isHandsFreeChecked = document.getElementById('hands-free').checked;
   doGameSetup(isHandsFreeChecked);
   
   const scoreCorrectDisplay = document.querySelectorAll('.score-correct');
   const scoreTotalDisplay = document.querySelectorAll('.score-total');
-  function resetScoreDisplay() {
-    scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
-    scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
-  }
-  resetScoreDisplay();
+  scoreCorrectDisplay.forEach((score) => score.innerHTML = 0);
+  scoreTotalDisplay.forEach((score) => score.innerHTML = 0);
 
   function doStandardMode() {
     function updateStatistics(interval, isCorrect) {
@@ -229,7 +220,8 @@ startGameBtn.addEventListener('click', () => {
       }
       function appendItemizedPercentage() {
         const percentDomRef = document.getElementById(interval + '-percentage');
-        percentDomRef.textContent = `${getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total)}%`
+        const percent = getPercentage(intervalActiveState.itemizedStats[interval].correct, intervalActiveState.itemizedStats[interval].total);
+        percentDomRef.textContent = `${percent}%`;
       }
       if (isCorrect) {
         intervalActiveState.itemizedStats[interval].correct++;
