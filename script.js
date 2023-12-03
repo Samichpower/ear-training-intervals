@@ -127,11 +127,12 @@ setGameState();
 function doGameSetup(isHandsFreeChecked) {
   intervalActiveState.isGameStarted = true;
   setGameState(isHandsFreeChecked);
-  
+
   const itemizedIntervalStatsContainer = document.getElementById('selected-interval-stats');
   itemizedIntervalStatsContainer.innerHTML = '';
   
   function createItemizedIntervalNode(interval) {
+    intervalActiveState.itemizedStats[interval.id] = {correct: 0, total: 0};
     const newSpan = document.createElement('span');
     newSpan.id = interval.id + '-percentage';
     newSpan.textContent = '0%';
@@ -148,10 +149,13 @@ function doGameSetup(isHandsFreeChecked) {
       selectedIntervals.push(interval.id);
     }
     if (interval.checked && !isHandsFreeChecked) {
-      intervalActiveState.itemizedStats[interval.id] = {correct: 0, total: 0};
       createItemizedIntervalNode(interval);
     }
   });
+
+  //This stops the gamestate from being set if no interval is selected. However, it breaks itemized stats for some reason. Move the two lines to the top of the function to fix it.
+  // if (selectedIntervals.length > 0) {
+  // }
 }
 
 let handsFreeSetInterval;
@@ -181,6 +185,18 @@ function doHandsFreeMode() {
 }
 
 startGameBtn.addEventListener('click', () => {
+  function getSelectedIntervals() {
+    const allIntervalCheckboxes = document.querySelectorAll('.interval');
+    let intervals = [];
+    allIntervalCheckboxes.forEach((interval) => {
+      if (interval.checked) {
+        intervals.push(interval.id);
+      }
+    });
+    return intervals;
+  }
+  if (getSelectedIntervals().length === 0) return;
+  
   const isHandsFreeChecked = document.getElementById('hands-free').checked;
   doGameSetup(isHandsFreeChecked);
   
