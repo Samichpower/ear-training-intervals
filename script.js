@@ -28,8 +28,9 @@ function resetAudioPlayback(rootNote, intervalNote) {
 }
 
 function playNotes(noteTiming, rootNote, intervalNote) {
-  resetAudioPlayback(rootNote, intervalNote);
   if (!rootNote) return;
+  rootNote.preload = 'auto';
+  intervalNote.preload = 'auto';
   rootNote.play();
   setTimeout(() => {
     rootNote.volume = 0.5;
