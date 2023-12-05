@@ -149,6 +149,10 @@ body {
 	text-align: center;
 }
 
+#selected-interval-stats ul li {
+	padding-bottom: 4px;
+}
+
 #bottom-content {
 	display: flex;
 	flex-direction: column;
