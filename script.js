@@ -140,7 +140,7 @@ function doGameSetup(isHandsFreeChecked) {
     const newSpan = document.createElement('span');
     newSpan.id = interval.id + '-percentage';
     newSpan.textContent = '0%';
-    const newListItem = document.createElement('ul');
+    const newListItem = document.createElement('li');
     newListItem.textContent = `${interval.parentNode.textContent} :: `;
     newListItem.appendChild(newSpan);
     return newListItem;
@@ -154,7 +154,8 @@ function doGameSetup(isHandsFreeChecked) {
       selectedIntervals.push(interval.id);
     }
     if (interval.checked && !isHandsFreeChecked) {
-      itemizedStatsList.appendChild(createItemizedIntervalNode(interval));
+      const intervalNode = createItemizedIntervalNode(interval);
+      itemizedStatsList.appendChild(intervalNode);
     }
   });
   itemizedIntervalStatsContainer.appendChild(itemizedStatsList);
