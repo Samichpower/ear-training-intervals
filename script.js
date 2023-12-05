@@ -138,22 +138,24 @@ function doGameSetup(isHandsFreeChecked) {
     const newSpan = document.createElement('span');
     newSpan.id = interval.id + '-percentage';
     newSpan.textContent = '0%';
-    const newPara = document.createElement('p');
-    newPara.textContent = `${interval.parentNode.textContent} :: `;
-    newPara.appendChild(newSpan);
-    itemizedIntervalStatsContainer.appendChild(newPara);
+    const newListItem = document.createElement('ul');
+    newListItem.textContent = `${interval.parentNode.textContent} :: `;
+    newListItem.appendChild(newSpan);
+    return newListItem;
   }
   
-  const allIntervalCheckboxes = document.querySelectorAll('.interval');
+  const intervalCheckboxList = document.querySelectorAll('.interval');
+  const itemizedStatsList = document.createElement('ul');
   selectedIntervals = [];
-  allIntervalCheckboxes.forEach((interval) => {
+  intervalCheckboxList.forEach((interval) => {
     if (interval.checked) {
       selectedIntervals.push(interval.id);
     }
     if (interval.checked && !isHandsFreeChecked) {
-      createItemizedIntervalNode(interval);
+      itemizedStatsList.appendChild(createItemizedIntervalNode(interval));
     }
   });
+  itemizedIntervalStatsContainer.appendChild(itemizedStatsList);
 }
 
 let handsFreeSetInterval;
