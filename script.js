@@ -12,10 +12,17 @@ const intervalActiveState = {
   isGameStarted: false,
   isAnswered: false,
   itemizedStats: {},
+  isPageLoaded: false,
 }
 
 function getPercentage(correctNum, totalNum) {
   return Math.round((correctNum / totalNum) * 100);
+}
+
+function getAudioFromIndex(index) {
+  const encodedNote = encodeURIComponent(allNoteNames[index]);
+  const note = new Audio('audio/' + encodedNote + '.mp3');
+  return note;
 }
 
 function resetAudioPlayback(rootNote, intervalNote) {
@@ -47,12 +54,6 @@ function getNextInterval() {
 
   intervalActiveState.isAnswered = false;
   resetAudioPlayback(intervalActiveState.rootNote, intervalActiveState.intervalNote);
-
-  function getAudioFromIndex(index) {
-    const encodedNote = encodeURIComponent(allNoteNames[index]);
-    const note = new Audio('audio/' + encodedNote + '.mp3');
-    return note;
-  }
 
   function getIntervalNoteIndex() {
     const randomInterval = Math.floor(Math.random() * selectedIntervals.length);
@@ -182,6 +183,10 @@ function doHandsFreeMode() {
 }
 
 startGameBtn.addEventListener('click', () => {
+  intervalActiveState.isPageLoaded = true;
+  if (intervalActiveState.isPageLoaded) {
+    preLoadAudio();
+  }
   function getSelectedIntervals() {
     const allIntervalCheckboxes = document.querySelectorAll('.interval');
     let intervals = [];
@@ -335,3 +340,11 @@ maxQuestionsInput.addEventListener('keydown', (e) => {
     e.preventDefault();
   }
 });
+
+function preLoadAudio() {
+  for (let note in allNoteNames) {
+    const audio = getAudioFromIndex(allNoteNames[note]);
+    audio.preload = 'auto';
+  }
+  console.log('page loaded');
+};
