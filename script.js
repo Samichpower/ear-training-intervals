@@ -12,7 +12,6 @@ const intervalActiveState = {
   isGameStarted: false,
   isAnswered: false,
   itemizedStats: {},
-  isPageLoaded: false,
 }
 
 function getPercentage(correctNum, totalNum) {
@@ -183,10 +182,6 @@ function doHandsFreeMode() {
 }
 
 startGameBtn.addEventListener('click', () => {
-  intervalActiveState.isPageLoaded = true;
-  if (intervalActiveState.isPageLoaded) {
-    preLoadAudio();
-  }
   function getSelectedIntervals() {
     const allIntervalCheckboxes = document.querySelectorAll('.interval');
     let intervals = [];
@@ -341,10 +336,14 @@ maxQuestionsInput.addEventListener('keydown', (e) => {
   }
 });
 
-function preLoadAudio() {
-  for (let note in allNoteNames) {
-    const audio = getAudioFromIndex(allNoteNames[note]);
-    audio.preload = 'auto';
-  }
-  console.log('page loaded');
-};
+window.addEventListener('load', () => {
+  function preLoadAudio() {
+    for (let i = 0; i < allNoteNames.length; i++) {
+      const audio = getAudioFromIndex(i);
+      console.log(audio);
+      audio.preload = 'auto';
+    }
+    console.log('page loaded');
+  };
+  preLoadAudio();
+})
