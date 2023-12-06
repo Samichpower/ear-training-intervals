@@ -340,7 +340,6 @@ window.addEventListener('load', () => {
   function preLoadAudio() {
     for (let i = 0; i < allNoteNames.length; i++) {
       const audio = getAudioFromIndex(i);
-      console.log(audio);
       audio.preload = 'auto';
     }
     console.log('page loaded');
